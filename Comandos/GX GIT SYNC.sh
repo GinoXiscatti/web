@@ -67,7 +67,3 @@ else
     echo ""
     echo -e "${YELLOW}👋 Entendido. Cambios guardados.${NC}"
 fi
-
-echo ""
-echo -e "${BOLD}${GREEN}✨ PROCESO COMPLETADO${NC}"
-echo ""
