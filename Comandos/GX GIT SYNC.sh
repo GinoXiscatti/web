@@ -16,21 +16,25 @@ echo ""
 
 # 1. Preparar archivos
 echo -e "${BOLD}[1/4] Preparando archivos para el commit...${NC}"
+# Ir a la raíz del proyecto para asegurar que git add . detecta todo
+cd "$(dirname "$0")/.."
 git add .
 echo -e "${GREEN}✓ Archivos añadidos correctamente${NC}"
 echo ""
 
 # 2. Pedir mensaje
 echo -e "${BOLD}[2/4] 📝 Introduce el mensaje para el commit:${NC}"
-echo -n "> "
-read commit_message
+while true; do
+    echo -n "> "
+    read commit_message
 
-# Verificar si el mensaje está vacío
-if [ -z "$commit_message" ]; then
-    echo ""
-    echo -e "${YELLOW}⚠️ El mensaje no puede estar vacío. Abortando...${NC}"
-    exit 1
-fi
+    # Verificar si el mensaje está vacío
+    if [ -n "$commit_message" ]; then
+        break
+    else
+        echo -e "${YELLOW}⚠️ El mensaje no puede estar vacío.${NC}"
+    fi
+done
 
 # 3. Ejecutar Commit (Normal o Amend)
 echo ""
@@ -56,6 +60,11 @@ echo ""
 echo -e "${BOLD}[4/4] 🌍 ¿Quieres subir los cambios a GitHub ahora? (y/n)${NC}"
 echo -n "> "
 read confirm_push
+
+# Si el usuario solo pulsa Enter (está vacío), lo tratamos como "y"
+if [ -z "$confirm_push" ]; then
+    confirm_push="y"
+fi
 
 if [[ "$confirm_push" =~ ^[Yy]$ ]]; then
     echo ""
