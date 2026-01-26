@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gino Xiscatti | Profesional</title>
     <link rel="stylesheet" href="Web/style.css">
+    <link rel="stylesheet" href="Web/modulo-inicio.css">
 </head>
 <body>
     <div id="mobile-barrier">
@@ -20,39 +21,51 @@
 
 
 
-    <div class="top-bar">
-        <a href="#perfil" class="signature">
+    <div class="top-bar grain-dark">
+        <a href="#modulo-perfil" class="signature">
             <img src="Resourses/Firma recortada.svg" alt="Gino Xiscatti" class="logo">
         </a>
         <nav>
             <ul>
-                <li><a href="#ilustra">Ilustra</a></li>
-                <li><a href="#dental-lab">Dental Lab</a></li>
-                <li><a href="#hobbys">Hobbys</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#contacto">Contacto</a></li>
+                <li><a href="#modulo-ilustra">Ilustra</a></li>
+                <li><a href="#modulo-dental-lab">Dental Lab</a></li>
+                <li><a href="#modulo-hobbys">Hobbys</a></li>
+                <li><a href="#modulo-blog">Blog</a></li>
+                <li><a href="#modulo-contacto">Contacto</a></li>
             </ul>
         </nav>
     </div>
 
 
-
-
-
-
-
     <main>
-        <div id="perfil" class="content-block active">
+        <div id="modulo-perfil" class="content-block active">
             <div class="hero">
-                <div class="hero-bg-bar"></div>
+                <div class="hero-app-icons grain-light">
+                    <div class="icons-track">
+                        <div class="icon-box">1</div>
+                        <div class="icon-box">2</div>
+                        <div class="icon-box">3</div>
+                        <div class="icon-box">4</div>
+                        <div class="icon-box">5</div>
+                        <div class="icon-box">6</div>
+                        <div class="icon-box">7</div>
+                        <div class="icon-box">8</div>
+                    </div>
+                </div>
+                <div class="hero-left">
+                    <div class="hero-bg-decor grain-light"></div>
+                </div>
+                <div class="hero-right">
+                    <h1 class="hero-text">Ideas que <span class="semibold">no</span> caben en una <span class="box-text grain-dark">sola caja</span></h1>
+                </div>
                 <img src="Resourses/Yo.webp" alt="Gino Xiscatti" class="hero-image">
             </div>
-            <div class="rect-16-9">
+            <div class="rect-16-9 grain-dark">
                 <!-- Este es el bloque gris de 16:9 -->
             </div>
         </div>
 
-        <div id="ilustra" class="content-block">
+        <div id="modulo-ilustra" class="content-block">
             <section>
                 <h2>Ilustra</h2>
                 <div class="grid">
@@ -64,7 +77,7 @@
             </section>
         </div>
 
-        <div id="dental-lab" class="content-block">
+        <div id="modulo-dental-lab" class="content-block">
             <section>
                 <h2>Dental Lab</h2>
                 <div class="grid">
@@ -76,7 +89,7 @@
             </section>
         </div>
 
-        <div id="hobbys" class="content-block">
+        <div id="modulo-hobbys" class="content-block">
             <section>
                 <h2>Hobbys</h2>
                 <div class="grid">
@@ -92,7 +105,7 @@
             </section>
         </div>
 
-        <div id="blog" class="content-block">
+        <div id="modulo-blog" class="content-block">
             <section>
                 <h2>Blog</h2>
                 <div class="grid">
@@ -104,7 +117,7 @@
             </section>
         </div>
 
-        <div id="contacto" class="content-block">
+        <div id="modulo-contacto" class="content-block">
             <section>
                 <h2>Contacto</h2>
                 <div class="card">
@@ -120,31 +133,6 @@
 
 
     
-    <script>
-        document.querySelectorAll('.top-bar a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                const targetId = this.getAttribute('href').substring(1);
-                const targetBlock = document.getElementById(targetId);
-
-                if (targetBlock) {
-                    e.preventDefault();
-
-                    // Ocultar todos los bloques
-                    document.querySelectorAll('.content-block').forEach(block => {
-                        block.classList.remove('active');
-                    });
-
-                    // Desactivar todos los enlaces del menú
-                    document.querySelectorAll('.top-bar a').forEach(l => {
-                        l.classList.remove('active');
-                    });
-
-                    // Mostrar el bloque seleccionado y activar el enlace
-                    targetBlock.classList.add('active');
-                    this.classList.add('active');
-                }
-            });
-        });
-    </script>
+    <script src="Web/script.js"></script>
 </body>
 </html>

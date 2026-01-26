@@ -1,0 +1,147 @@
+/* ==========================================================================
+   MODULO INICIO (HERO SECTION)
+   ========================================================================== */
+
+.hero {
+    position: relative; /* Para que la barra de fondo se posicione respecto a este contenedor */
+    width: 100%;
+    height: calc(100vh - var(--nav-height));
+    display: flex;
+    align-items: center; /* Centrado verticalmente */
+    justify-content: flex-start;
+    background: #f9f9f9;
+    /* Eliminado overflow: hidden para evitar que se recorte la imagen lateralmente */
+}
+
+.hero-left, .hero-right {
+     position: absolute;
+     top: 0;
+     width: 50%;
+     height: calc(100% - 150px); /* Ajustado para la nueva altura fija de 150px */
+     background: transparent;
+     z-index: 0; /* Bajado de 1 a 0 para que esté por detrás de hero-app-icons (z-index: 1) */
+ }
+
+ .hero-left {
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+    
+    .hero-bg-decor {
+             width: 70%; /* Reducido un 10% (de 80% a 70%) */
+             height: 35%; /* Reducido un 10% (de 45% a 35%) */
+             background: linear-gradient(to bottom, #ffd188, #e29734);
+             margin-right: 10%;
+             transform: translateY(-10%); /* Desplazado un 10% hacia arriba */
+         }
+    
+    .hero-right {
+         flex: 1;
+         height: calc(100% - 150px);
+         background-color: transparent;
+         z-index: 0; /* Bajado de 1 a 0 para que esté por detrás de hero-app-icons (z-index: 1) */
+         right: 0;
+         display: flex;
+         flex-direction: column;
+         justify-content: center;
+         align-items: flex-end; /* Alineado a la derecha */
+         padding-right: 0; /* Eliminado el padding del contenedor */
+      }
+  
+      .hero-text {
+            font-family: 'ClashDisplay', sans-serif !important; 
+             font-size: clamp(2rem, 4vw, 3.5rem); 
+             font-weight: 300 !important; /* Forzado con !important para anular estilos de h1 */
+             line-height: 1.2;
+             color: #333333;
+             text-align: right; 
+             margin: 0;
+             text-transform: uppercase;
+              word-spacing: 0.7rem; /* Aumenta la separación entre palabras */
+              max-width: 630px; /* Ajustado a 630px según petición */
+              padding-right: 10%; /* Movido el padding aquí directamente al texto */
+          }
+            .hero-text .semibold {
+               font-weight: 600 !important; /* Semibold según tus @font-face */
+           }
+
+           .hero-text .box-text {
+               background-color: #000000;
+               color: #ffffff !important;
+               padding: 0 15px;
+               display: inline-block; /* Para que el fondo negro respete el padding */
+               margin-top: 5px; /* Pequeño ajuste para que no pegue con la línea de arriba */
+               line-height: 1.4; /* Ajuste para que la caja negra tenga buen alto */
+           }
+      
+       .hero-app-icons {
+         position: absolute;
+         bottom: 0;
+         left: 0;
+         width: 100%;
+         height: 150px;
+         background-color: #6d91b2;
+         z-index: 1;
+         padding: 0; /* Quitamos el padding de aquí */
+         overflow: hidden;
+         display: flex;
+         align-items: center;
+     }
+
+     .icons-track {
+         display: flex;
+         width: max-content;
+         height: 100%;
+         padding: 15px 0; /* El padding vuelve a la pista que se mueve */
+     }
+
+     .icon-box {
+         height: 100%;
+         aspect-ratio: 1 / 1;
+         background-color: #ffffff30;
+         color: rgba(0, 0, 0, 0.052); /* Blanco con 5% de opacidad */
+         display: flex;
+         align-items: center;
+         border-radius: 5px;
+         justify-content: center;
+         font-family: var(--font-main);
+         font-weight: 600;
+         font-size: 2rem;
+         margin-right: 20px;
+         flex-shrink: 0; /* Evita que se compriman */
+     }
+
+     @keyframes scroll-icons {
+         0% {
+             transform: translateX(0);
+         }
+         100% {
+             transform: translateX(-50%); /* Se desplaza la mitad (los duplicados) */
+         }
+     }
+
+.hero-image {
+          position: relative;
+          width: 50%; 
+          min-height: 100%; 
+          object-fit: contain; /* Cambiado de cover a contain para asegurar que la imagen nunca se recorte internamente */
+          object-position: bottom center; /* Alineado a la base para que el min-height proteja el borde inferior */
+          height: auto;
+          display: block;
+          z-index: 5; 
+          flex-shrink: 0; 
+          filter: drop-shadow(0 20px 20px rgba(0, 0, 0, 0.162)); /* Sombreado suave y grande de fondo */
+      }
+
+.rect-16-9 {
+    position: relative; /* Añadido para habilitar z-index */
+    z-index: 10; /* Mayor que el z-index de la imagen (5) */
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background-color: #000000; /* Gris para el bloque 16:9 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

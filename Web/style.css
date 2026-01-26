@@ -62,6 +62,39 @@
     --nav-height: 50px;
     --font-main: 'ClashDisplay', sans-serif;
     --font-signature: 'ClashDisplay', sans-serif;
+    --noise-grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 150 150' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Estilos base para el efecto de grano */
+.grain-dark, .grain-light {
+    position: relative;
+    overflow: hidden;
+}
+
+.grain-dark::before, .grain-light::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: var(--noise-grain);
+    background-repeat: repeat;
+    background-size: 150px 150px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Variante para fondos OSCUROS (como el que estaba) */
+.grain-dark::before {
+    opacity: 0.25;
+    mix-blend-mode: screen;
+}
+
+/* Variante para fondos CLAROS (nuevo) */
+.grain-light::before {
+    opacity: 0.35;
+    mix-blend-mode: multiply;
 }
 
 * {
@@ -94,7 +127,6 @@ body {
     width: 100%;
     height: var(--nav-height);
     background: #000000;
-    border-bottom: none;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -102,7 +134,21 @@ body {
     z-index: 1000;
 }
 
+.top-bar::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    background: linear-gradient(to right, 
+        #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff
+    );
+}
+
 .signature {
+    position: relative;
+    z-index: 10;
     display: flex;
     align-items: flex-end;
     text-decoration: none;
@@ -114,6 +160,12 @@ body {
     height: 100%;
     width: auto;
     display: block;
+    opacity: 0.8;
+}
+
+nav {
+    position: relative;
+    z-index: 10;
 }
 
 nav ul {
@@ -151,13 +203,13 @@ main {
 /* Personalización de la barra de desplazamiento */
 
 main::-webkit-scrollbar-thumb {
-    background-color: #3d8ba0;
+    background-color: #e29734;
 }
 
 /* Para Firefox */
 main {
     scrollbar-width: thin;
-    scrollbar-color: #3d8ba0 transparent;
+    scrollbar-color: #e29734 transparent;
 }
 
 .content-block {
@@ -174,50 +226,8 @@ main {
 }
 
 /* ==========================================================================
-   HERO SECTION
-   ========================================================================== */
-
-.hero {
-    position: relative; /* Para que la barra de fondo se posicione respecto a este contenedor */
-    width: 100%;
-    height: calc(100vh - var(--nav-height));
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-start;
-    background: #f9f9f9;
-    overflow: hidden;
-}
-
-.hero-bg-bar {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 300px;
-    background-color: #3d8ba0; /* Color gris para el rectángulo de fondo */
-    z-index: 1; /* Por debajo de la imagen */
-}
-
-.hero-image {
-    position: relative;
-    height: 100%;
-    width: auto;
-    display: block;
-    z-index: 2; /* Por encima de la barra de fondo */
-}
-
-/* ==========================================================================
    COMPONENTS & TYPOGRAPHY
    ========================================================================== */
-
-.rect-16-9 {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    background-color: #000000; /* Gris para el bloque 16:9 */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 
 .content-block section {
     width: 100%;

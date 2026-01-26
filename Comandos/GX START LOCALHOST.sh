@@ -30,7 +30,7 @@ if [ ! -f "index.html" ]; then
 fi
 
 # Preguntar por LAN
-echo -e "${BOLD}¿Habilitar acceso en red local (LAN)? (y/N)${NC}"
+echo -e "${BOLD}¿Habilitar acceso en red local (LAN)? (Y/N)${NC}"
 echo -n "> "
 read -r response
 echo ""
