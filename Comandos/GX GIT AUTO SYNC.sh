@@ -15,8 +15,8 @@ git add . > /dev/null 2>&1
 ahead=$(git rev-list --count origin/main..HEAD 2>/dev/null)
 has_changes=$(git status --porcelain)
 
-# Mensaje con fecha y hora
-MESSAGE="Auto-sync: $(date '+%Y-%m-%d %H:%M:%S')"
+# Mensaje estático
+ MESSAGE="Auto-Sync"
 
 if [ -n "$has_changes" ]; then
     if [ -n "$ahead" ] && [ "$ahead" -gt 0 ]; then
