@@ -8,6 +8,6 @@ echo "Tu página estará disponible en: http://localhost:$PORT"
 echo "Presiona Ctrl+C para detener el servidor."
 
 # Iniciar un servidor HTTP simple usando Python
-# Ahora se ejecuta desde la carpeta Web para que sea autónoma
-cd "$(dirname "$0")/../Web"
+# Ahora se ejecuta desde la raíz para que el index.html sea detectado por GitHub
+cd "$(dirname "$0")/.."
 python3 -m http.server $PORT
