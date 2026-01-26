@@ -1,0 +1,305 @@
+/* ==========================================================================
+   FONTS
+   ========================================================================== */
+
+@font-face {
+    font-family: 'ClashDisplay';
+    src: url('../Resourses/Fonts/ClashDisplay-Extralight.woff2') format('woff2');
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ClashDisplay';
+    src: url('../Resourses/Fonts/ClashDisplay-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ClashDisplay';
+    src: url('../Resourses/Fonts/ClashDisplay-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ClashDisplay';
+    src: url('../Resourses/Fonts/ClashDisplay-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ClashDisplay';
+    src: url('../Resourses/Fonts/ClashDisplay-Semibold.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ClashDisplay';
+    src: url('../Resourses/Fonts/ClashDisplay-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Akira';
+    src: url('../Resourses/Fonts/Akira Expanded Demo.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* ==========================================================================
+   VARIABLES & RESET
+   ========================================================================== */
+
+:root {
+    --bg-color: #ffffff;
+    --text-color: #1a1a1a;
+    --accent-color: #666666;
+    --nav-height: 50px;
+    --font-main: 'ClashDisplay', sans-serif;
+    --font-signature: 'ClashDisplay', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ==========================================================================
+   BASE STYLES
+   ========================================================================== */
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    height: 100vh; /* Altura total de la pantalla */
+    overflow: hidden; /* Evita el scroll en el body */
+}
+
+/* ==========================================================================
+   HEADER & NAVIGATION
+   ========================================================================== */
+
+.top-bar {
+    position: absolute; /* Cambiado de fixed a absolute para que se apoye en el body estático */
+    top: 0;
+    width: 100%;
+    height: var(--nav-height);
+    background: #000000;
+    border-bottom: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    z-index: 1000;
+}
+
+.signature {
+    display: flex;
+    align-items: flex-end;
+    text-decoration: none;
+    height: 100%;
+    padding-top: 10px; /* Agregado padding superior de 10px */
+}
+
+.logo {
+    height: 100%;
+    width: auto;
+    display: block;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #999; /* Ajustado para fondo oscuro */
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #ffffff;
+}
+
+/* ==========================================================================
+   MAIN LAYOUT
+   ========================================================================== */
+
+main {
+    margin-top: var(--nav-height);
+    width: 100%;
+    height: calc(100vh - var(--nav-height)); /* Altura restante debajo de la top-bar */
+    overflow-y: auto; /* El scroll ahora sucede aquí */
+    overflow-x: hidden;
+}
+
+/* Personalización de la barra de desplazamiento */
+
+main::-webkit-scrollbar-thumb {
+    background-color: #3d8ba0;
+}
+
+/* Para Firefox */
+main {
+    scrollbar-width: thin;
+    scrollbar-color: #3d8ba0 transparent;
+}
+
+.content-block {
+    width: 100%;
+    min-height: calc(100vh - var(--nav-height));
+    padding: 0; /* Eliminado padding para permitir bloques de ancho completo */
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
+.content-block.active {
+    display: flex; /* Se muestra solo cuando tiene la clase active */
+}
+
+/* ==========================================================================
+   HERO SECTION
+   ========================================================================== */
+
+.hero {
+    position: relative; /* Para que la barra de fondo se posicione respecto a este contenedor */
+    width: 100%;
+    height: calc(100vh - var(--nav-height));
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    background: #f9f9f9;
+    overflow: hidden;
+}
+
+.hero-bg-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 300px;
+    background-color: #3d8ba0; /* Color gris para el rectángulo de fondo */
+    z-index: 1; /* Por debajo de la imagen */
+}
+
+.hero-image {
+    position: relative;
+    height: 100%;
+    width: auto;
+    display: block;
+    z-index: 2; /* Por encima de la barra de fondo */
+}
+
+/* ==========================================================================
+   COMPONENTS & TYPOGRAPHY
+   ========================================================================== */
+
+.rect-16-9 {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background-color: #000000; /* Gris para el bloque 16:9 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content-block section {
+    width: 100%;
+    max-width: 1200px;
+    padding: 80px 40px; /* Reintroducido padding para secciones de contenido normal */
+}
+
+nav ul li a.active {
+    color: #ffffff;
+    border-bottom: 2px solid #ffffff;
+    padding-bottom: 5px;
+}
+
+.hero h1 {
+    font-size: 4rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    letter-spacing: -2px;
+    line-height: 1.1;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    color: var(--accent-color);
+    max-width: 600px;
+}
+
+section {
+    padding: 80px 0;
+}
+
+h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    display: block;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: #ffffff;
+    padding: 40px;
+    border: 1px solid #eee;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: var(--text-color);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   MEDIA QUERIES
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .top-bar {
+        padding: 0 20px;
+    }
+    nav ul {
+        gap: 15px;
+    }
+    nav ul li a {
+        font-size: 0.7rem;
+    }
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+}
