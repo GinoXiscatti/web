@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gino Xiscatti | Profesional</title>
+    <title>Gino Xiscatti</title>
     <link rel="stylesheet" href="Web/style.css">
     <link rel="stylesheet" href="Web/modulo-inicio.css">
     <style>
@@ -80,6 +80,7 @@
              </div>
          </div>
         <nav>
+            <div class="nav-marker"></div>
             <ul>
                 <li><a href="#modulo-perfil" class="active">Mi historia</a></li>
                 <li class="nav-separator"></li>
@@ -87,7 +88,7 @@
                 <li><a href="#modulo-dental-lab">Dental Lab</a></li>
                 <li class="nav-separator"></li>
                 <li><a href="#modulo-hobbys">Hobbys</a></li>
-                <li><a href="#modulo-blog">Blog</a></li>
+                <li><a href="#modulo-tutoriales">Tutoriales</a></li>
                 <li><a href="#modulo-contacto">Contacto</a></li>
             </ul>
         </nav>
@@ -148,18 +149,53 @@
             </div>
         </div>
 
+
+
+
+
+
         <div id="modulo-ilustra" class="content-block">
             <section>
                 <h2>Ilustra</h2>
-                <div class="grid">
-                    <div class="card">
-                        <h3>Proyecto Ilustra 01</h3>
-                        <p>Descripción detallada del trabajo artístico y creativo.</p>
+                <div class="ilustra-subnav">
+                    <button class="ilustra-tab active" data-ilustra="que-es">¿Qué es Ilustra?</button>
+                    <button class="ilustra-tab" data-ilustra="portafolio">Portafolio</button>
+                    <button class="ilustra-tab" data-ilustra="precios">Precios</button>
+                </div>
+                <div class="ilustra-panels">
+                    <div class="ilustra-panel active" data-ilustra-panel="que-es">
+                        <div class="grid">
+                            <div class="card">
+                                <h3>Proyecto Ilustra 01</h3>
+                                <p>Descripción detallada del trabajo artístico y creativo.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ilustra-panel" data-ilustra-panel="portafolio">
+                        <div class="grid">
+                            <div class="card">
+                                <h3>Portafolio</h3>
+                                <p>Galería seleccionada de trabajos y proyectos de Ilustra.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ilustra-panel" data-ilustra-panel="precios">
+                        <div class="grid">
+                            <div class="card">
+                                <h3>Precios</h3>
+                                <p>Información básica de paquetes y rangos de inversión.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
         </div>
 
+
+
+
+
+        
         <div id="modulo-dental-lab" class="content-block">
             <section>
                 <h2>Dental Lab</h2>
@@ -188,9 +224,9 @@
             </section>
         </div>
 
-        <div id="modulo-blog" class="content-block">
+        <div id="modulo-tutoriales" class="content-block">
             <section>
-                <h2>Blog</h2>
+                <h2>Tutoriales</h2>
                 <div class="grid">
                     <div class="card">
                         <h3>Entrada 01</h3>
@@ -203,9 +239,39 @@
         <div id="modulo-contacto" class="content-block">
             <section>
                 <h2>Contacto</h2>
-                <div class="card">
-                    <p>¿Tienes un proyecto en mente? Hablemos.</p>
-                    <p>Email: xiscattigino@gmail.com</p>
+                <div class="grid">
+                    <!-- Sector Personal -->
+                    <div class="card card-personal">
+                        <h3>Personal</h3>
+                        <ul class="contact-list">
+                            <li><a href="mailto:xiscattigino@gmail.com" class="contact-link">Email</a></li>
+                            <li><a href="https://www.instagram.com/gino.xiscatti/" target="_blank" class="contact-link">Instagram</a></li>
+                            <li><a href="https://wa.me/595982573222" target="_blank" class="contact-link">Whatsapp</a></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Sector Illustra -->
+                    <div class="card card-illustra">
+                        <h3>Illustra</h3>
+                        <ul class="contact-list">
+                            <li><a href="https://www.instagram.com/ilustra.estudio.grafico/" target="_blank" class="contact-link">Instagram</a></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Sector Laboratorio -->
+                    <div class="card card-dental">
+                        <h3>Dental Lab</h3>
+                        <p class="coming-soon">Próximamente...</p>
+                    </div>
+                    
+                    <!-- Sector Otros -->
+                    <div class="card card-otros">
+                        <h3>Otros</h3>
+                        <ul class="contact-list">
+                            <li><a href="https://github.com/GinoXiscatti" target="_blank" class="contact-link">Github</a></li>
+                            <li><a href="https://www.reddit.com/user/GinoXiscatti/" target="_blank" class="contact-link">Reddit</a></li>
+                        </ul>
+                    </div>
                 </div>
             </section>
         </div>
