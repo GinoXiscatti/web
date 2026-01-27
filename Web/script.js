@@ -52,28 +52,110 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Inicialización de sistemas internos ---
     initWebSystems();
+    initDesignUI();
+    initBoxSecret();
 });
 
+function initBoxSecret() {
+    const boxText = document.querySelector('.box-text');
+    const bubble = document.querySelector('.miau-bubble');
+    
+    if (boxText && bubble) {
+        const messages = [
+            "...miau...",
+            "...cuac...",
+            "...muu...",
+            "...pio pio?...",
+            "¿Es en serio?"
+        ];
+        let currentIdx = 0;
+
+        boxText.addEventListener('mouseenter', () => {
+            // Si ya terminamos todos los mensajes, no hacemos nada
+            if (currentIdx >= messages.length) return;
+
+            bubble.textContent = messages[currentIdx];
+            currentIdx++;
+
+            // Si este era el último mensaje ("¿Es en serio?"), 
+            // preparamos la desactivación para la próxima vez
+            if (currentIdx === messages.length) {
+                boxText.addEventListener('mouseleave', () => {
+                    bubble.remove(); // Eliminamos la burbuja del DOM para que no vuelva a salir
+                }, { once: true });
+            }
+        });
+    }
+}
+
+function initDesignUI() {
+    const decor = document.querySelector('.portada-decoracion-2');
+    const radiusDisplay = document.getElementById('radius-value');
+
+    if (decor && radiusDisplay) {
+        function updateRadiusValue() {
+            // Obtenemos el valor real computado del border-radius
+            const computedStyle = window.getComputedStyle(decor);
+            const radius = computedStyle.borderBottomLeftRadius;
+            
+            // Limpiamos el valor (ej: "30px" -> "30") y redondeamos para evitar decimales
+            const cleanValue = Math.round(parseFloat(radius));
+            
+            if (radiusDisplay.textContent !== cleanValue.toString()) {
+                radiusDisplay.textContent = cleanValue;
+            }
+
+            requestAnimationFrame(updateRadiusValue);
+        }
+        updateRadiusValue();
+    }
+}
+
 function initWebSystems() {
-    // Sistema de Navegación (SPA)
+    // Sistema de Navegación (SPA) con Transiciones Pro
     document.querySelectorAll('.top-bar a').forEach(link => {
         link.addEventListener('click', function(e) {
             const targetId = this.getAttribute('href').substring(1);
             const targetBlock = document.getElementById(targetId);
+            const currentBlock = document.querySelector('.content-block.active');
 
-            if (targetBlock) {
+            if (targetBlock && targetBlock !== currentBlock) {
                 e.preventDefault();
-                document.querySelectorAll('.content-block').forEach(block => {
-                    block.classList.remove('active');
-                });
-                document.querySelectorAll('.top-bar a').forEach(l => {
-                    l.classList.remove('active');
-                });
-                targetBlock.classList.add('active');
-                this.classList.add('active');
+                
+                // 1. Animación de salida para el bloque actual
+                if (currentBlock) {
+                    currentBlock.style.animation = 'moduleExit 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards';
+                    
+                    // Esperamos a que termine la salida para cambiar
+                    setTimeout(() => {
+                        currentBlock.classList.remove('active');
+                        currentBlock.style.animation = ''; // Limpiamos
+                        
+                        // 2. Activamos el nuevo bloque
+                        activateNewBlock(targetBlock, this);
+                    }, 400);
+                } else {
+                    activateNewBlock(targetBlock, this);
+                }
             }
         });
     });
+
+    function activateNewBlock(targetBlock, linkElement) {
+        document.querySelectorAll('.content-block').forEach(block => {
+            block.classList.remove('active');
+        });
+        document.querySelectorAll('.top-bar a').forEach(l => {
+            l.classList.remove('active');
+        });
+
+        targetBlock.classList.add('active');
+        linkElement.classList.add('active');
+        
+        // Reset del scroll al cambiar de módulo
+        const mainElement = document.querySelector('main');
+        if (mainElement) mainElement.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
     // Carrusel Infinito Profesional
     const track = document.querySelector('.icons-track');

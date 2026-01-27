@@ -67,21 +67,133 @@
          justify-content: center;
          align-items: flex-end; /* Alineado a la derecha */
          padding-right: 0; /* Eliminado el padding del contenedor */
+         position: absolute; /* Aseguramos que sea referencia para los hijos absolutos */
       }
-  
-      .portada-frase {
-            font-family: 'ClashDisplay', sans-serif !important; 
-             font-size: clamp(2rem, 4vw, 3.5rem); 
-             font-weight: 300 !important; /* Forzado con !important para anular estilos de h1 */
-             line-height: 1.2;
-             color: #333333;
-             text-align: right; 
-             margin: 0;
-             filter: drop-shadow(0 4px 5px rgba(0, 0, 0, 0.3));
-             text-transform: uppercase;
-              word-spacing: 0.7rem; /* Aumenta la separación entre palabras */
-              max-width: 630px; /* Ajustado a 630px según petición */
-              padding-right: 10%; /* Movido el padding aquí directamente al texto */
+
+      .portada-decoracion-2 {
+             position: absolute;
+             top: 0;
+             right: 0;
+             width: 50%; /* Ajustable según el tamaño deseado */
+             height: 20%; /* Ajustable según el tamaño deseado */
+             background-color: #eda9a9;
+             z-index: -1; /* Detrás del texto */
+           box-shadow: 0 0 40px 0px #eda9a9a8;
+             
+             /* Animación de redondeo: secuencia 0 -> 60 -> 0 -> 40 -> 0 con pausas MUCHO más largas */
+                animation: cornerRound 12s ease-in-out infinite;
+            }
+   
+            @keyframes cornerRound {
+                0%, 30% { /* Pausa larga inicial en 0 */
+                    border-bottom-left-radius: 0px;
+                }
+                35%, 50% { /* Sube a 60 y mantiene */
+                    border-bottom-left-radius: 60px;
+                }
+                55%, 75% { /* Vuelve a 0 y pausa larga */
+                    border-bottom-left-radius: 0px;
+                }
+                80%, 90% { /* Sube a 40 y mantiene */
+                    border-bottom-left-radius: 40px;
+                }
+                95%, 100% { /* Vuelve a 0 */
+                    border-bottom-left-radius: 0px;
+                }
+            }
+ 
+            /* Estilos para el indicador de Interfaz de Diseño */
+            .radius-ui-display {
+                position: absolute;
+                bottom: 10px; /* Dentro del bloque, abajo */
+                right: 10px; /* Margen de 10 del borde right */
+                font-family: 'Inter', monospace;
+                font-size: 10px;
+                color: #ffffff; /* Texto en blanco */
+                display: flex;
+                gap: 6px;
+                align-items: center;
+                letter-spacing: 1px;
+                font-weight: 600;
+                opacity: 0.9;
+                pointer-events: none;
+            }
+ 
+            .ui-label {
+                border-right: 1px solid rgba(255, 255, 255, 0.3); /* Línea blanca sutil */
+                padding-right: 6px;
+            }
+ 
+            .ui-value {
+                font-variant-numeric: tabular-nums;
+                color: #ffffff; /* Texto en blanco */
+            }
+
+           .ui-unit {
+                  font-size: 8px;
+                  margin-left: -2px;
+              }
+
+              /* Puntero Decorativo Estilo Software de Diseño */
+               .puntero-decorativo {
+                    position: absolute;
+                    bottom: -23px; /* Ajustado para el nuevo tamaño de 34px */
+                    left: -12px; /* Ajustado: movido 1px a la izquierda y compensado por tamaño */
+                    width: 34px; /* Aumentado 2px (era 32px) */
+                    height: 34px; /* Aumentado 2px (era 32px) */
+                    z-index: 10;
+                   filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.15));
+                   pointer-events: none;
+                   /* Animación que simula estar "arrastrando" el radio */
+                   animation: punteroDrag 12s ease-in-out infinite;
+               }
+
+              @keyframes punteroDrag {
+                   0%, 30% { 
+                       transform: translate(0, 0) scale(1);
+                   }
+                   35%, 50% { 
+                       transform: translate(45px, -45px) scale(0.9); /* Movimiento diagonal: derecha y arriba */
+                   }
+                   55%, 75% { 
+                       transform: translate(0, 0) scale(1);
+                   }
+                   80%, 90% { 
+                       transform: translate(30px, -30px) scale(0.9); /* Movimiento diagonal: derecha y arriba */
+                   }
+                   95%, 100% { 
+                       transform: translate(0, 0) scale(1);
+                   }
+               }
+    
+        .portada-frase {
+              font-family: 'ClashDisplay', sans-serif !important; 
+                font-size: clamp(2rem, 4vw, 3.5rem); 
+                font-weight: 300 !important; 
+                color: #000000; 
+                 margin-top: 5% !important; /* Desplazado un poco hacia abajo usando % */
+                 margin-bottom: 0 !important;
+                 margin-left: 0 !important;
+                 margin-right: 0 !important;
+                 padding: 0; 
+                 transform: translateY(1rem); 
+                 filter: drop-shadow(0 4px 5px rgba(0, 0, 0, 0.3));
+                text-transform: uppercase;
+                 max-width: 630px; 
+                 padding-right: 10%; 
+                 
+                 /* Nuevo sistema Flex para control total del espaciado */
+                 display: flex;
+                 flex-direction: column;
+                 align-items: flex-end;
+                 gap: 0; /* Espacio entre líneas (ajustable) */
+             }
+          
+          .frase-line {
+              line-height: 0.9; /* Altura de cada línea individual */
+              word-spacing: 0.7rem;
+              text-align: right; /* Asegura que el texto dentro del bloque se alinee a la derecha */
+              width: 100%; /* Ocupa todo el ancho disponible para que text-align funcione */
           }
             .portada-frase .semibold {
                font-weight: 700 !important; /* Bold (el más grueso) */
@@ -90,11 +202,67 @@
            .portada-frase .box-text {
               background-color: #000000;
               color: #ffffff !important;
-              padding: 0 15px;
+              padding: 0 10px; /* Reducido de 15px a 10px */
               display: inline-block; /* Para que el fondo negro respete el padding */
               margin-top: 5px; /* Pequeño ajuste para que no pegue con la línea de arriba */
-              line-height: 1.4; /* Ajuste para que la caja negra tenga buen alto */
+              line-height: 1.2; /* Ajuste para que la caja negra tenga buen alto */
               position: relative;
+              
+              /* Animación sutil de "algo atrapado" */
+              animation: boxShake 8s cubic-bezier(.36,.07,.19,.97) 5s infinite;
+          }
+
+          @keyframes boxShake {
+              0%, 15%, 45%, 60%, 100% { transform: translate(0, 0) rotate(0deg); }
+              18% { transform: translate(1.5px, 0.5px) rotate(0.8deg); }
+              22% { transform: translate(-1.5px, -0.5px) rotate(-0.8deg); }
+              26% { transform: translate(1px, -1px) rotate(0.4deg); }
+              30% { transform: translate(-0.5px, 1px) rotate(-0.4deg); }
+              34% { transform: translate(0.5px, 0.5px) rotate(0.2deg); }
+              38% { transform: translate(-0.5px, -0.5px) rotate(-0.2deg); }
+          }
+
+          /* Burbuja de diálogo secreta */
+          .miau-bubble {
+              position: absolute;
+              top: 50%; /* Centrada verticalmente respecto a la caja */
+              right: calc(100% + 15px); /* Situada a la izquierda de la caja con margen */
+              transform: translateY(-50%) translateX(10px) scale(0.8); /* Animación lateral */
+              background-color: #ffffff;
+              color: #000000 !important;
+              padding: 5px 12px;
+              border-radius: 15px;
+              font-family: 'Inter', sans-serif;
+              font-size: 13px;
+              font-weight: 700;
+              letter-spacing: 0.5px;
+              white-space: nowrap;
+              opacity: 0;
+              visibility: hidden;
+              pointer-events: none;
+              transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+              box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+              text-transform: none; 
+              z-index: 100;
+          }
+
+          /* El rabito de la burbuja (ahora apunta a la derecha) */
+          .miau-bubble::before {
+              content: '';
+              position: absolute;
+              top: 50%;
+              left: 100%; /* Rabito en el lado derecho de la burbuja */
+              transform: translateY(-50%);
+              border-width: 6px;
+              border-style: solid;
+              border-color: transparent transparent transparent #ffffff; /* Triángulo hacia la derecha */
+          }
+
+          .portada-frase .box-text:hover .miau-bubble {
+              opacity: 1;
+              visibility: visible;
+              transform: translateY(-50%) translateX(0) scale(1);
+              transition-delay: 0.5s;
           }
 
           .portada-frase .box-text::after {
@@ -125,6 +293,8 @@
          overflow: hidden;
          display: flex;
          align-items: center;
+         /* Efecto de brillo tipo vidrio en el borde superior */
+         box-shadow: inset 0 2px 4px 0 rgba(255, 255, 255, 0.619);
      }
 
      .icons-track {
