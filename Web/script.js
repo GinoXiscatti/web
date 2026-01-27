@@ -1,4 +1,4 @@
-// Lógica de Carga Profesional (Híbrida: Simulación + Realidad)
+// Lógica de Carga Profesional (Versión Cache-Proof)
 document.addEventListener('DOMContentLoaded', () => {
     const topBar = document.querySelector('.top-bar');
     const progress = document.querySelector('.macos-progress');
@@ -6,28 +6,43 @@ document.addEventListener('DOMContentLoaded', () => {
     // Bloqueamos scroll por seguridad
     document.body.style.overflow = 'hidden';
 
-    // 1. INICIO: Animamos hasta el 70% lentamente (simulando carga de recursos)
-    // Si la web es lenta, se quedará esperando aquí.
-    setTimeout(() => {
-        if (progress) {
-            progress.style.transition = 'width 2s cubic-bezier(0.25, 1, 0.5, 1)';
-            progress.style.width = '70%';
-        }
-    }, 100);
+    // Variable para controlar el timeout de la animación lenta
+    let simulationTimeout;
 
-    // 2. CARGA REAL: Cuando el navegador dice "Ya está todo", completamos.
-    window.addEventListener('load', () => {
-        if (progress) {
-            // Cambiamos a una transición rápida para el tramo final
-            progress.style.transition = 'width 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
-            progress.style.width = '100%';
-        }
-    });
+    // Función para completar la carga (0 -> 100% o 70% -> 100%)
+    const completeLoading = () => {
+        // Cancelamos la simulación lenta si aún no ha ocurrido (para evitar retrocesos)
+        if (simulationTimeout) clearTimeout(simulationTimeout);
 
-    // 3. ACTIVADOR FINAL: Solo abrimos cuando la barra llega FÍSICAMENTE al 100%
+        if (progress) {
+            // Si ya estaba en proceso o en 0, forzamos una transición fluida al 100%
+            // Usamos un pequeño timeout para asegurar que el navegador procese el cambio de clase/estilo
+            requestAnimationFrame(() => {
+                progress.style.transition = 'width 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
+                progress.style.width = '100%';
+            });
+        }
+    };
+
+    // 1. Lógica de Simulación (solo si no ha cargado ya)
+    if (document.readyState !== 'complete') {
+        simulationTimeout = setTimeout(() => {
+            if (progress) {
+                progress.style.transition = 'width 2s cubic-bezier(0.25, 1, 0.5, 1)';
+                progress.style.width = '70%';
+            }
+        }, 100);
+        
+        // Esperamos al evento load real
+        window.addEventListener('load', completeLoading);
+    } else {
+        // Si ya está 'complete' (caché), ejecutamos inmediatamente
+        completeLoading();
+    }
+
+    // 2. ACTIVADOR FINAL: Solo abrimos cuando la barra llega FÍSICAMENTE al 100%
     if (progress) {
         progress.addEventListener('transitionend', (e) => {
-            // Verificamos que sea la propiedad width y que esté al 100%
             if (e.propertyName === 'width' && progress.style.width === '100%') {
                 topBar.classList.add('loaded');
                 document.body.style.overflow = '';
