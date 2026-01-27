@@ -1,8 +1,8 @@
 /* ==========================================================================
-   MODULO INICIO (HERO SECTION)
+   MODULO INICIO (PORTADA SECTION)
    ========================================================================== */
 
-.hero {
+.portada {
     position: relative; /* Para que la barra de fondo se posicione respecto a este contenedor */
     width: 100%;
     height: calc(100vh - var(--nav-height));
@@ -13,23 +13,23 @@
     /* Eliminado overflow: hidden para evitar que se recorte la imagen lateralmente */
 }
 
-.hero-left, .hero-right {
+.portada-left, .portada-right {
      position: absolute;
      top: 0;
      width: 50%;
      height: calc(100% - 150px); /* Ajustado para la nueva altura fija de 150px */
      background: transparent;
-     z-index: 0; /* Bajado de 1 a 0 para que esté por detrás de hero-app-icons (z-index: 1) */
+     z-index: 0; /* Bajado de 1 a 0 para que esté por detrás de portada-apps (z-index: 1) */
  }
 
- .hero-left {
+ .portada-left {
         left: 0;
         display: flex;
         align-items: center;
         justify-content: flex-end;
     }
     
-    .hero-bg-decor {
+    .portada-decoracion-1 {
              width: 70%; /* Reducido un 10% (de 80% a 70%) */
              height: 35%; /* Reducido un 10% (de 45% a 35%) */
              background: linear-gradient(to bottom, #ffd188, #e29734);
@@ -56,11 +56,11 @@
     }
 }
     
-    .hero-right {
+    .portada-right {
          flex: 1;
          height: calc(100% - 150px);
          background-color: transparent;
-         z-index: 0; /* Bajado de 1 a 0 para que esté por detrás de hero-app-icons (z-index: 1) */
+         z-index: 0; /* Bajado de 1 a 0 para que esté por detrás de portada-apps (z-index: 1) */
          right: 0;
          display: flex;
          flex-direction: column;
@@ -69,7 +69,7 @@
          padding-right: 0; /* Eliminado el padding del contenedor */
       }
   
-      .hero-text {
+      .portada-frase {
             font-family: 'ClashDisplay', sans-serif !important; 
              font-size: clamp(2rem, 4vw, 3.5rem); 
              font-weight: 300 !important; /* Forzado con !important para anular estilos de h1 */
@@ -77,16 +77,17 @@
              color: #333333;
              text-align: right; 
              margin: 0;
+             filter: drop-shadow(0 4px 5px rgba(0, 0, 0, 0.3));
              text-transform: uppercase;
               word-spacing: 0.7rem; /* Aumenta la separación entre palabras */
               max-width: 630px; /* Ajustado a 630px según petición */
               padding-right: 10%; /* Movido el padding aquí directamente al texto */
           }
-            .hero-text .semibold {
+            .portada-frase .semibold {
                font-weight: 700 !important; /* Bold (el más grueso) */
            }
 
-           .hero-text .box-text {
+           .portada-frase .box-text {
               background-color: #000000;
               color: #ffffff !important;
               padding: 0 15px;
@@ -96,7 +97,7 @@
               position: relative;
           }
 
-          .hero-text .box-text::after {
+          .portada-frase .box-text::after {
               content: '';
               display: inline-block;
               width: 12px;
@@ -112,7 +113,7 @@
               50% { opacity: 1; }
           }
       
-       .hero-app-icons {
+       .portada-apps {
          position: absolute;
          bottom: 0;
          left: 0;
@@ -147,11 +148,12 @@
      }
 
      .icon-box img {
-         width: 80%;
-         height: 80%;
-         object-fit: contain;
-         opacity: 0.9;
-     }
+          width: 80%;
+          height: 80%;
+          object-fit: contain;
+          opacity: 0.9;
+          filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.3)); /* Sombra suave estilo Apple */
+      }
 
      @keyframes scroll-icons {
          0% {
@@ -162,7 +164,7 @@
          }
      }
 
-.hero-image {
+.portada-image {
           position: relative;
           width: 50%; 
           min-height: 100%; 
@@ -172,24 +174,7 @@
           display: block;
           z-index: 5; 
           flex-shrink: 0; 
-          
-          /* Animación de entrada épica */
-          opacity: 0;
-          transform: translateY(30px) scale(0.95);
-          animation: heroImageFadeIn 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-          animation-delay: 0.3s;
       }
-
-@keyframes heroImageFadeIn {
-    0% {
-        opacity: 0;
-        transform: translateY(30px) scale(0.95);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
 
 .rect-16-9 {
     position: relative; /* Añadido para habilitar z-index */
