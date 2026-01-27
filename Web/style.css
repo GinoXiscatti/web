@@ -188,6 +188,13 @@ nav ul li a:hover {
     color: #ffffff;
 }
 
+.nav-separator {
+    width: 1px;
+    height: 15px;
+    background-color: #444;
+    align-self: center;
+}
+
 /* ==========================================================================
    MAIN LAYOUT
    ========================================================================== */

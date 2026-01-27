@@ -35,7 +35,26 @@
              background: linear-gradient(to bottom, #ffd188, #e29734);
              margin-right: 10%;
              transform: translateY(-10%); /* Desplazado un 10% hacia arriba */
+           box-shadow: 0 0 40px 0px rgba(255, 209, 136, 0.7);
+             
+             /* Animación de flotación sutil */
+             animation: floatingDecor 6s ease-in-out infinite;
          }
+
+@keyframes floatingDecor {
+    0%, 100% {
+        transform: translateY(-10%) translateX(0) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-11%) translateX(5px) rotate(0.5deg);
+    }
+    50% {
+        transform: translateY(-12%) translateX(-3px) rotate(-0.3deg);
+    }
+    75% {
+        transform: translateY(-10.5%) translateX(8px) rotate(0.2deg);
+    }
+}
     
     .hero-right {
          flex: 1;
@@ -64,17 +83,34 @@
               padding-right: 10%; /* Movido el padding aquí directamente al texto */
           }
             .hero-text .semibold {
-               font-weight: 600 !important; /* Semibold según tus @font-face */
+               font-weight: 700 !important; /* Bold (el más grueso) */
            }
 
            .hero-text .box-text {
-               background-color: #000000;
-               color: #ffffff !important;
-               padding: 0 15px;
-               display: inline-block; /* Para que el fondo negro respete el padding */
-               margin-top: 5px; /* Pequeño ajuste para que no pegue con la línea de arriba */
-               line-height: 1.4; /* Ajuste para que la caja negra tenga buen alto */
-           }
+              background-color: #000000;
+              color: #ffffff !important;
+              padding: 0 15px;
+              display: inline-block; /* Para que el fondo negro respete el padding */
+              margin-top: 5px; /* Pequeño ajuste para que no pegue con la línea de arriba */
+              line-height: 1.4; /* Ajuste para que la caja negra tenga buen alto */
+              position: relative;
+          }
+
+          .hero-text .box-text::after {
+              content: '';
+              display: inline-block;
+              width: 12px;
+              height: 2px;
+              background-color: #ffffff;
+              margin-left: 4px;
+              vertical-align: baseline;
+              animation: blink 1s step-end infinite;
+          }
+
+          @keyframes blink {
+              from, to { opacity: 0; }
+              50% { opacity: 1; }
+          }
       
        .hero-app-icons {
          position: absolute;
@@ -100,17 +136,21 @@
      .icon-box {
          height: 100%;
          aspect-ratio: 1 / 1;
-         background-color: #ffffff30;
-         color: rgba(0, 0, 0, 0.052); /* Blanco con 5% de opacidad */
+         background-color: transparent;
          display: flex;
          align-items: center;
          border-radius: 5px;
          justify-content: center;
-         font-family: var(--font-main);
-         font-weight: 600;
-         font-size: 2rem;
          margin-right: 20px;
          flex-shrink: 0; /* Evita que se compriman */
+         overflow: hidden;
+     }
+
+     .icon-box img {
+         width: 80%;
+         height: 80%;
+         object-fit: contain;
+         opacity: 0.9;
      }
 
      @keyframes scroll-icons {
@@ -132,8 +172,24 @@
           display: block;
           z-index: 5; 
           flex-shrink: 0; 
-          filter: drop-shadow(0 20px 20px rgba(0, 0, 0, 0.162)); /* Sombreado suave y grande de fondo */
+          
+          /* Animación de entrada épica */
+          opacity: 0;
+          transform: translateY(30px) scale(0.95);
+          animation: heroImageFadeIn 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+          animation-delay: 0.3s;
       }
+
+@keyframes heroImageFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
 
 .rect-16-9 {
     position: relative; /* Añadido para habilitar z-index */
