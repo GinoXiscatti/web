@@ -1,114 +1,136 @@
 // Lógica de Carga Profesional (Versión Cache-Proof)
 document.addEventListener('DOMContentLoaded', () => {
+    // Alerta inmediata si se abre como archivo local
+    if (window.location.protocol === 'file:') {
+        alert('AVISO: Para que la carga de módulos funcione, debes abrir este archivo usando un servidor local (Live Server o similar). Los navegadores bloquean la carga de archivos externos por seguridad en modo file://');
+    }
+
     const topBar = document.querySelector('.top-bar');
     const progress = document.querySelector('.macos-progress');
     
     // Bloqueamos scroll por seguridad
     document.body.style.overflow = 'hidden';
 
-    // Variable para controlar el timeout de la animación lenta
-    let simulationTimeout;
+    // 0. Simulación inicial de la barra (para que no parezca muerta)
+    if (progress) {
+        progress.style.transition = 'width 2s cubic-bezier(0.25, 1, 0.5, 1)';
+        progress.style.width = '15%';
+    }
+
+    // Función que se puede llamar tanto por transitionend como por fallback
+    const finishLoading = () => {
+        if (topBar && !topBar.classList.contains('loaded')) {
+            topBar.classList.add('loaded');
+            document.body.style.overflow = '';
+            initWebSystems();
+        }
+    };
 
     // Función para completar la carga (0 -> 100% o 70% -> 100%)
     const completeLoading = () => {
-        // Cancelamos la simulación lenta si aún no ha ocurrido (para evitar retrocesos)
-        if (simulationTimeout) clearTimeout(simulationTimeout);
-
         if (progress) {
-            // Si ya estaba en proceso o en 0, forzamos una transición fluida al 100%
-            // Usamos un pequeño timeout para asegurar que el navegador procese el cambio de clase/estilo
+            // Aseguramos que el progreso sea 100% y disparamos la entrada
             requestAnimationFrame(() => {
                 progress.style.transition = 'width 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
                 progress.style.width = '100%';
             });
+        } else {
+            // Si no hay barra de progreso, terminamos inmediatamente
+            finishLoading();
         }
     };
 
-    // 1. Lógica de Simulación (solo si no ha cargado ya)
-    if (document.readyState !== 'complete') {
-        simulationTimeout = setTimeout(() => {
-            if (progress) {
-                progress.style.transition = 'width 2s cubic-bezier(0.25, 1, 0.5, 1)';
-                progress.style.width = '70%';
-            }
-        }, 100);
-        
-        // Esperamos al evento load real
-        window.addEventListener('load', completeLoading);
-    } else {
-        // Si ya está 'complete' (caché), ejecutamos inmediatamente
+    // 1. Cargamos los módulos (la barra se llena según la carga real)
+    loadModules().then(() => {
         completeLoading();
-    }
+    }).catch(err => {
+        console.error('Fallo crítico en loadModules:', err);
+        completeLoading(); // Intentamos abrir de todos modos
+    });
 
     // 2. ACTIVADOR FINAL: Solo abrimos cuando la barra llega FÍSICAMENTE al 100%
     if (progress) {
         progress.addEventListener('transitionend', (e) => {
             if (e.propertyName === 'width' && progress.style.width === '100%') {
-                topBar.classList.add('loaded');
-                document.body.style.overflow = '';
+                finishLoading();
             }
         });
-    }
 
-    // --- Inicialización de sistemas internos ---
-    initWebSystems();
-    initDesignUI();
-    initBoxSecret();
+        // Fallback de seguridad (3s después del DOMContentLoaded)
+        setTimeout(() => {
+            finishLoading();
+        }, 3000);
+    } else {
+        finishLoading();
+    }
 });
 
-function initBoxSecret() {
-    const boxText = document.querySelector('.box-text');
-    const bubble = document.querySelector('.miau-bubble');
-    
-    if (boxText && bubble) {
-        const messages = [
-            "...miau...",
-            "...cuac...",
-            "...muu...",
-            "...pio pio?...",
-            "¿Es en serio?"
-        ];
-        let currentIdx = 0;
+async function loadModules() {
+    const modules = [
+        { id: 'modulo-perfil', path: 'ModuloInicio/modulo-inicio.html' },
+        { id: 'modulo-ilustra', path: 'ModuloIlustra/modulo-ilustra.html' },
+        { id: 'modulo-dental-lab', path: 'ModuloDentalLab/modulo-dental-lab.html' },
+        { id: 'modulo-miel', path: 'ModuloMiel/modulo-miel.html' },
+        { id: 'modulo-contacto', path: 'ModuloContacto/modulo-contacto.html' }
+    ];
 
-        boxText.addEventListener('mouseenter', () => {
-            // Si ya terminamos todos los mensajes, no hacemos nada
-            if (currentIdx >= messages.length) return;
+    const main = document.querySelector('main');
+    const progress = document.querySelector('.macos-progress');
+    let loadedCount = 0;
 
-            bubble.textContent = messages[currentIdx];
-            currentIdx++;
-
-            // Si este era el último mensaje ("¿Es en serio?"), 
-            // preparamos la desactivación para la próxima vez
-            if (currentIdx === messages.length) {
-                boxText.addEventListener('mouseleave', () => {
-                    bubble.remove(); // Eliminamos la burbuja del DOM para que no vuelva a salir
-                }, { once: true });
-            }
-        });
-    }
-}
-
-function initDesignUI() {
-    const decor = document.querySelector('.portada-decoracion-2');
-    const radiusDisplay = document.getElementById('radius-value');
-
-    if (decor && radiusDisplay) {
-        function updateRadiusValue() {
-            // Obtenemos el valor real computado del border-radius
-            const computedStyle = window.getComputedStyle(decor);
-            const radius = computedStyle.borderBottomLeftRadius;
-            
-            // Limpiamos el valor (ej: "30px" -> "30") y redondeamos para evitar decimales
-            const cleanValue = Math.round(parseFloat(radius));
-            
-            if (radiusDisplay.textContent !== cleanValue.toString()) {
-                radiusDisplay.textContent = cleanValue;
-            }
-
-            requestAnimationFrame(updateRadiusValue);
+    const updateLoadingProgress = () => {
+        loadedCount++;
+        if (progress) {
+            // Llenamos hasta el 95% según la carga real
+            const percentage = (loadedCount / modules.length) * 95;
+            progress.style.width = `${percentage}%`;
         }
-        updateRadiusValue();
-    }
+    };
+
+    // Cargamos todos los módulos en paralelo
+    const loadPromises = modules.map(async (module) => {
+        try {
+            const response = await fetch(module.path);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            const html = await response.text();
+            
+            // Creamos un contenedor temporal
+            const temp = document.createElement('div');
+            temp.innerHTML = html;
+            
+            const content = temp.querySelector(`#${module.id}`);
+            if (content) {
+                // Reemplazamos el placeholder en el DOM
+                const placeholder = document.getElementById(module.id);
+                if (placeholder) {
+                    placeholder.innerHTML = content.innerHTML;
+                    // Mantenemos las clases del original pero añadimos las del nuevo si faltan
+                    content.classList.forEach(cls => placeholder.classList.add(cls));
+                } else {
+                    main.appendChild(content);
+                }
+            } else {
+                throw new Error(`No se encontró el contenido para el id ${module.id} en ${module.path}`);
+            }
+            updateLoadingProgress();
+        } catch (error) {
+            console.error(`Error cargando el módulo ${module.id}:`, error);
+            const placeholder = document.getElementById(module.id);
+            if (placeholder) {
+                placeholder.innerHTML = `<section><h2>Error al cargar ${module.id}</h2><p>Verifica que el servidor local esté corriendo y que el archivo ${module.path} exista.</p></section>`;
+            }
+            updateLoadingProgress(); // Seguimos para no bloquear la carga general
+        }
+    });
+
+    await Promise.all(loadPromises);
+
+    // Una vez cargados los HTML, llamamos a las funciones de inicialización de cada módulo
+    if (typeof initModuloInicio === 'function') initModuloInicio();
+    if (typeof initModuloIlustra === 'function') initModuloIlustra();
+    if (typeof initModuloDentalLab === 'function') initModuloDentalLab();
+    if (typeof initModuloMiel === 'function') initModuloMiel();
+    if (typeof initModuloContacto === 'function') initModuloContacto();
 }
 
 function initWebSystems() {
@@ -117,21 +139,12 @@ function initWebSystems() {
     const nav = document.querySelector('nav');
 
     const baseTitle = 'Gino Xiscatti';
-    const titlesById = {
-        'modulo-perfil': baseTitle,
-        'modulo-ilustra': baseTitle + ' → Ilustra',
-        'modulo-dental-lab': baseTitle + ' → Dental Lab',
-        'modulo-hobbys': baseTitle + ' → Hobbys',
-        'modulo-tutoriales': baseTitle + ' → Tutoriales',
-        'modulo-contacto': baseTitle + ' → Contacto'
-    };
 
     function getTitleForId(id) {
         if (id === 'modulo-perfil') return baseTitle;
         if (id === 'modulo-ilustra') return baseTitle + ' → Ilustra';
         if (id === 'modulo-dental-lab') return baseTitle + ' → Dental Lab';
-        if (id === 'modulo-hobbys') return baseTitle + ' → Hobbys';
-        if (id === 'modulo-tutoriales') return baseTitle + ' → Tutoriales';
+        if (id === 'modulo-miel') return baseTitle + ' → Miel';
         if (id === 'modulo-contacto') return baseTitle + ' → Contacto';
         return baseTitle;
     }
@@ -246,60 +259,5 @@ function initWebSystems() {
         // Reset del scroll al cambiar de módulo
         const mainElement = document.querySelector('main');
         if (mainElement) mainElement.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    const ilustraTabs = document.querySelectorAll('.ilustra-tab');
-    const ilustraPanels = document.querySelectorAll('.ilustra-panel');
-
-    function activateIlustra(key) {
-        ilustraTabs.forEach(tab => {
-            const value = tab.getAttribute('data-ilustra');
-            tab.classList.toggle('active', value === key);
-        });
-        ilustraPanels.forEach(panel => {
-            const value = panel.getAttribute('data-ilustra-panel');
-            panel.classList.toggle('active', value === key);
-        });
-    }
-
-    if (ilustraTabs.length && ilustraPanels.length) {
-        ilustraTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const key = tab.getAttribute('data-ilustra');
-                activateIlustra(key);
-            });
-        });
-    }
-
-    // Carrusel Infinito Profesional
-    const track = document.querySelector('.icons-track');
-    if (track) {
-        const items = Array.from(track.children);
-        const trackWidth = track.parentElement.offsetWidth;
-        const itemWidth = items[0].offsetWidth + 20;
-        const neededItems = Math.ceil(trackWidth / itemWidth) + items.length;
-        
-        for (let i = 0; i < neededItems; i++) {
-            const clone = items[i % items.length].cloneNode(true);
-            track.appendChild(clone);
-        }
-
-        let scrollAmount = 0;
-        const speed = 1;
-
-        function animate() {
-            scrollAmount -= speed;
-            const firstItem = track.firstElementChild;
-            const firstItemWidth = firstItem.offsetWidth + 20;
-
-            if (Math.abs(scrollAmount) >= firstItemWidth) {
-                scrollAmount += firstItemWidth;
-                track.appendChild(firstItem);
-            }
-
-            track.style.transform = `translateX(${scrollAmount}px)`;
-            requestAnimationFrame(animate);
-        }
-        animate();
     }
 }

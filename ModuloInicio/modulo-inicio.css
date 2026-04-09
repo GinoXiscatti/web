@@ -13,6 +13,20 @@
     /* Eliminado overflow: hidden para evitar que se recorte la imagen lateralmente */
 }
 
+.portada h1 {
+    font-size: 4rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    letter-spacing: -2px;
+    line-height: 1.1;
+}
+
+.portada p {
+    font-size: 1.2rem;
+    color: var(--accent-color);
+    max-width: 600px;
+}
+
 .portada-left, .portada-right {
      position: absolute;
      top: 0;
@@ -36,6 +50,8 @@
              margin-right: 10%;
              transform: translateY(-10%); /* Desplazado un 10% hacia arriba */
            box-shadow: 0 0 40px 0px rgba(255, 209, 136, 0.7);
+                    box-shadow: inset 0 0 8px 0 rgba(255, 255, 255, 0.399);
+
              
              /* Animación de flotación sutil */
              animation: floatingDecor 6s ease-in-out infinite;
@@ -79,6 +95,8 @@
              background-color: #eda9a9;
              z-index: -1; /* Detrás del texto */
            box-shadow: 0 0 40px 0px #eda9a9a8;
+
+         box-shadow: inset 2px -2px 4px 0 rgba(255, 255, 255, 0.379);
              
              /* Animación de redondeo: secuencia 0 -> 60 -> 0 -> 40 -> 0 con pausas MUCHO más largas */
                 animation: cornerRound 12s ease-in-out infinite;
@@ -346,13 +364,404 @@
           flex-shrink: 0; 
       }
 
-.rect-16-9 {
-    position: relative; /* Añadido para habilitar z-index */
-    z-index: 10; /* Mayor que el z-index de la imagen (5) */
+.content-block .myproblem {
+    position: relative;
+    z-index: 10;
     width: 100%;
     aspect-ratio: 16 / 9;
-    background-color: #000000; /* Gris para el bloque 16:9 */
+    background-color: #000000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Mantiene el comportamiento para myproblem */
+}
+
+.content-block .autodidacta {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background-color: #000000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Centrado para yt-base */
+}
+
+.content-block .polimota { /* Una sola variable para todo el bloque */
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 100%; /* Evita empujar a la derecha */
+    aspect-ratio: 16 / 9;
+    background-color: #000000;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden; /* Seguridad extra */
+    box-sizing: border-box;
+}
+
+/* Diseño de Cinta de Cine */
+.film-strip {
+    height: 100%;
+    width: 12%; /* Ancho original */
+    padding: 2% 0; /* Padding superior e inferior original */
+    box-sizing: border-box;
+    overflow: hidden;
+    position: relative;
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+    /* Degradado de desvanecimiento (fade) en los extremos */
+    -webkit-mask-image: linear-gradient(to bottom, 
+        transparent 0%, 
+        black 15%, 
+        black 85%, 
+        transparent 100%);
+    mask-image: linear-gradient(to bottom, 
+        transparent 0%, 
+        black 15%, 
+        black 85%, 
+        transparent 100%);
+}
+
+.perforation-track {
+    display: flex;
+    flex-direction: column;
+    width: 60%; /* Ancho de las perforaciones dentro de la banda */
+    gap: 4.2%; /* Gap original ajustado para 6 perforaciones */
+    height: auto;
+    animation: filmFlow 8s linear infinite;
+}
+
+@keyframes filmFlow {
+    from {
+        /* Empieza en la posición original para un bucle hacia arriba */
+        transform: translateY(0);
+    }
+    to {
+        /* Termina desplazado hacia arriba (una perforación + gap) */
+        transform: translateY(calc(-100% / 6 - 0.7%));
+    }
+}
+.perforation {
+    flex: 0 0 calc((100vh * 0.5625 * 0.9) / 7); /* Cálculo basado en el aspect ratio 16:9 del padre */
+    aspect-ratio: 1 / 1; /* Volvemos al formato cuadrado original */
+    width: 100%;
+    background-color: #101010;
+    border-radius: 7%;
+}
+
+.polimota-container {
+    flex: 1;
+    margin: 3.5% 0; /* Mismo margen que el padding de las perforaciones */
+    height: calc(100% - 7%); /* Ajuste exacto de altura (3.5% + 3.5%) */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 5%;
+    position: relative;
+    background-color: #101010; /* Fondo central unificado */
+}
+
+.polimota-text {
+    font-family: 'ClashDisplay', sans-serif;
+    color: #ffffff;
+    line-height: 1.1;
+    font-size: 3.5vw; /* Escala relativa */
+    letter-spacing: -0.01em;
+}
+
+.polimota-text.top {
+    text-align: right;
+    font-weight: 300;
+    margin-bottom: 15vh;
+}
+
+.polimota-text.bottom {
+    text-align: left;
+    font-weight: 300;
+}
+
+.polimota-text .bold {
+    font-weight: 500;
+}
+
+/* Paleta de colores para fondo gris oscuro */
+
+.c-narrativa { 
+    color: #d1b3ff; /* Violeta suave: Representa imaginación y profundidad */
+}
+.c-ritmo { 
+    color: #ffffb5; /* Amarillo claro: Representa energía, pulso y movimiento */
+}
+.c-color { 
+    color: #ffb7ce; /* Rosa pastel: Representa la estética y la parte visual vibrante */
+}
+.c-encuadre { 
+    color: #b2f2bb; /* Verde menta: Representa equilibrio, estructura y composición */
+}
+.c-sonido { 
+    color: #a2d2ff; /* Azul cielo: Representa ondas sonoras y fluidez */
+}
+.c-musica { 
+    color: #98ffed; /* Cian/Aqua: Representa armonía y claridad melódica */
+}
+.c-escenario { 
+    color: #ffe5b4; /* Melocotón/Arena: Representa la ambientación y el entorno físico */
+}
+.c-efectos { 
+    color: #cfbaf0; /* Lavanda azulado: Representa lo mágico, lo digital y lo especial */
+}
+.c-dedicacion { 
+    color: #ff8c94; /* Coral/Rojo suave: Representa la pasión, el corazón y el esfuerzo */
+}
+
+.polimota-text p {
+    margin: 0;
+}
+
+.yt-base {
+    width: 90%;
+    height: 90%;
+    /* Degradado sutil con el color base actual y variantes */
+    background: linear-gradient(135deg, #3a4d51, #4a5d61, #2a3d41);
+    background-size: 200% 200%; /* Tamaño mayor para que el degradado pueda fluir */
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1%;
+    box-sizing: border-box;
+    overflow: hidden;
+    /* Animación combinada: movimiento de degradado + rotación de color */
+    animation: gradientFlow 15s ease infinite, hueRotateFlow 20s linear infinite;
+}
+
+@keyframes gradientFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes hueRotateFlow {
+    from { filter: hue-rotate(0deg); }
+    to { filter: hue-rotate(360deg); }
+}
+
+.yt-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5%; /* Añadido padding superior e inferior para evitar que choque con la barra */
+    text-align: left;
+    color: #ffffff;
+    position: relative; /* Para el hue-ui-display */
+}
+
+.hue-ui-display {
+    position: absolute;
+    top: 9px;
+    right: 15px;
+    font-family: 'Inter', monospace;
+    font-size: 10px;
+    color: #ffffff;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    letter-spacing: 1px;
+    font-weight: 600;
+    opacity: 0.8;
+    pointer-events: none;
+}
+.yt-title {
+    font-family: 'ClashDisplay', sans-serif;
+    font-weight: 550;
+    font-size: 4vw; /* Igualado al bloque "myproblem" */
+    margin-bottom: 0.5vw;
+    text-transform: none;
+    border: none;
+    padding: 0;
+    letter-spacing: normal; /* Reset para evitar herencia de h2 */
+    line-height: 1.1;
+}
+
+.yt-description {
+    font-family: 'ClashDisplay', sans-serif;
+    font-weight: 300;
+    font-size: 4vw; /* Igualado al bloque "myproblem" */
+    line-height: 1.1;
+    margin: 0;
+    letter-spacing: -0.01em;
+}
+
+.yt-highlight {
+    font-weight: 450;
+    display: block;
+    margin-top: 1vw;
+    letter-spacing: -0.01em;
+}
+
+.yt-base-rep {
+    width: 100%;
+    height: 8%; /* Barra delgada */
+    background-color: rgba(255, 255, 255, 0.149); /* Tono muy sutil para dejar pasar el color */
+    backdrop-filter: saturate(1.2); /* Satura el color de abajo un 20% */
+    -webkit-backdrop-filter: saturate(1.2); /* Compatibilidad Safari */
+    border-radius: 8px;
     display: flex;
     align-items: center;
+    padding: 0 1.2%;
+    gap: 1.5%;
+}
+
+.play-icon {
+    height: 50%; /* Se adapta al alto de la barra */
+    width: auto;
+    opacity: 0.9;
+}
+
+.time-placeholder {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.2vw;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 1px;
+}
+
+.myproblem-white-rect {
+    width: 100%;
+    height: 50%; /* Altura ajustada */
+    background-color: #ffffff;
+    margin-top: 0; /* Sin márgenes arriba */
+    z-index: 0; /* Bajo el grano */
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 75%); /* Chanfle inferior: más corto a la izquierda */
+}
+
+.myproblem-text {
+    position: absolute;
+    top: 20%; /* Posicionado para cruzar el blanco y el negro */
+    left: 10%;
+    z-index: 10;
+    color: #ffffff;
+    mix-blend-mode: difference;
+    font-family: 'ClashDisplay', sans-serif;
+    font-weight: 300;
+    font-size: 4.5vw; /* Puro vw para escala exacta sin importar el ancho */
+    letter-spacing: -0.02em; /* Estética de Clash Display grande */
+    line-height: 1.05;
+    pointer-events: none;
+}
+
+.myproblem-text p {
+    margin: 0;
+}
+
+.myproblem-text .bold {
+    font-weight: 700;
+}
+
+.myproblem-text.second {
+    top: 55%; /* Posicionado más abajo */
+    left: 10%; /* Un poco más a la derecha para romper la simetría */
+}
+
+.myproblem-text .dispatches {
+    font-family: 'Dispatches', sans-serif;
+    font-weight: normal;
+    font-size: 1.1em; /* Un poco más grande para compensar la fuente */
+    letter-spacing: 0.05em;
+    display: inline-block; /* Habilita el margen si es necesario */
+    margin-top: 1.2vw; /* Escala relativa para el espaciado extra */
+    color: #ffffff;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.235);
+}
+
+.content-block .autodidacta {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background-color: #000000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Centrado para yt-base */
+}
+.final {
+    width: 100%;
+    aspect-ratio: 16 / 9; /* Volvemos al estándar 16/9 */
+    background-color: #ffffff;
+    display: flex;
     justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+}
+
+.final-text {
+    font-family: 'ClashDisplay', sans-serif;
+    color: #000000; /* Texto negro sobre fondo blanco */
+    font-size: 3vw;
+    line-height: 1.2;
+    font-weight: 300;
+}
+
+.final-text p {
+    margin: 0;
+}
+
+.final-text .bold {
+    font-weight: 600;
+}
+
+.back-to-top-wrapper {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    width: 50px;
+    height: 50px;
+    z-index: 100;
+}
+
+.back-to-top {
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    border: none;
+    border-radius: 50%;
+    color: #ffffff;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    /* Sombra Apple Style: Suave, difusa y elegante */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 
+                0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.back-to-top-wrapper:hover .back-to-top {
+    transform: translateY(-8px);
+    background-color: #1a1a1a;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25), 
+                0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.back-to-top:active {
+    /* Mantenemos el desplazamiento del hover (-8px) pero aplicamos el scale centrado */
+    transform: translateY(-8px) scale(0.9);
+}
+
+/* Efecto de Blur para el módulo completo */
+.modulo-inicio-container {
+    transition: filter 0.5s cubic-bezier(0.16, 1, 0.3, 1); /* Reducido de 0.8s a 0.5s */
+    filter: blur(0);
+    width: 100%;
+}
+
+.modulo-inicio-container.blur-effect {
+    filter: blur(8px); /* Reducido de 15px a 8px */
 }

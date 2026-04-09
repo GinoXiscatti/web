@@ -4,8 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gino Xiscatti</title>
-    <link rel="stylesheet" href="Web/style.css">
-    <link rel="stylesheet" href="Web/modulo-inicio.css">
+    <link rel="icon" href="Assets/FirmaOnlyG.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="ModuloInicio/modulo-inicio.css">
+    <link rel="stylesheet" href="ModuloMiel/modulo-miel.css">
+    <link rel="stylesheet" href="ModuloIlustra/modulo-ilustra.css">
+    <link rel="stylesheet" href="ModuloDentalLab/modulo-dental-lab.css">
+    <link rel="stylesheet" href="ModuloContacto/modulo-contacto.css">
     <style>
         /* Estilo crítico para asegurar que la carga inicie inmediatamente */
         .top-bar {
@@ -64,17 +69,12 @@
         </div>
     </div>
     
-
-
-
-
-
-    <div class="top-bar grain-dark">
+    <div class="top-bar myproblem">
         <a href="#modulo-perfil" class="signature">
-            <img src="Resourses/Firma recortada.svg" alt="Gino Xiscatti" class="logo">
+            <img src="Assets/Firma recortada.svg" alt="Gino Xiscatti" class="logo">
         </a>
         <div class="macos-loader">
-             <img src="Resourses/FirmaOnlyG.svg" alt="Logo" class="macos-logo">
+             <img src="Assets/FirmaOnlyG.svg" alt="Logo" class="macos-logo">
              <div class="macos-progress-container">
                 <div class="macos-progress"></div>
              </div>
@@ -86,202 +86,26 @@
                 <li class="nav-separator"></li>
                 <li><a href="#modulo-ilustra">Ilustra</a></li>
                 <li><a href="#modulo-dental-lab">Dental Lab</a></li>
+                <li><a href="#modulo-miel">Miel</a></li>
                 <li class="nav-separator"></li>
-                <li><a href="#modulo-hobbys">Hobbys</a></li>
-                <li><a href="#modulo-tutoriales">Tutoriales</a></li>
                 <li><a href="#modulo-contacto">Contacto</a></li>
             </ul>
         </nav>
     </div>
 
-
     <main>
-        <div id="modulo-perfil" class="content-block active">
-            <div class="portada">
-                <div class="portada-apps grain-light">
-                    <div class="icons-track">
-                        <!-- Otros -->
-                        <div class="icon-box"><img src="Resourses/AppIcons/Apple.webp" alt="Apple"></div>
-                        <div class="icon-box"><img src="Resourses/AppIcons/SAH.webp" alt="SAH"></div>
-                        <div class="icon-box"><img src="Resourses/AppIcons/TRAE.webp" alt="Trae"></div>
-                        <div class="icon-box"><img src="Resourses/AppIcons/Notion.webp" alt="Notion"></div>
-                        <div class="icon-box"><img src="Resourses/AppIcons/Comfy.webp" alt="Comfy UI"></div>
-                        <div class="icon-box"><img src="Resourses/AppIcons/Canva.webp" alt="Canva"></div>
-                        <div class="icon-box"><img src="Resourses/AppIcons/LuminarNeo.webp" alt="Luminar Neo"></div>
-                        <!-- Adobe -->
-                        <div class="icon-box"><img src="Resourses/AppIcons/Illustrator.webp" alt="Illustrator"></div>
-                        <div class="icon-box"><img src="Resourses/AppIcons/LightroomClassic.webp" alt="Lightroom Classic"></div>
-                        <div class="icon-box"><img src="Resourses/AppIcons/Photoshop.webp" alt="Photoshop"></div>
-                        <div class="icon-box"><img src="Resourses/AppIcons/PremierPro.webp" alt="Premiere Pro"></div>
-                        <div class="icon-box"><img src="Resourses/AppIcons/AfterEffects.webp" alt="After Effects"></div>
-                        <div class="icon-box"><img src="Resourses/AppIcons/Ilustra.png" alt="Ilustra"></div>
-                        
-                        <!-- Topaz -->
-                        <div class="icon-box"><img src="Resourses/AppIcons/Topaz Gigapixel.webp" alt="Topaz Gigapixel"></div>
-                        <div class="icon-box"><img src="Resourses/AppIcons/Topz Photo.webp" alt="Topaz Photo"></div>
-                        <div class="icon-box"><img src="Resourses/AppIcons/Topz Video.webp" alt="Topaz Video"></div>
-
-                        <div class="icon-box"><img src="Resourses/AppIcons/Blender.webp" alt="Blender"></div>
-                    </div>
-                </div>
-                <div class="portada-left">
-                    <div class="portada-decoracion-1 grain-light"></div>
-                </div>
-                <div class="portada-right">
-            <div class="portada-decoracion-2">
-                 <div class="radius-ui-display">
-                     <span class="ui-label">CORNER_RADIUS</span>
-                     <span class="ui-value" id="radius-value">0</span><span class="ui-unit">px</span>
-                 </div>
-                 <img src="Resourses/DecoracionPuntero.svg" alt="Puntero Decorativo" class="puntero-decorativo">
-             </div>
-            <h1 class="portada-frase">
-                 <div class="frase-line">IDEAS QUE</div>
-                 <div class="frase-line"><span class="semibold">NO CABEN</span></div>
-                 <div class="frase-line">EN UNA</div>
-                 <div class="frase-line"><span class="box-text">CAJA<span class="miau-bubble">...miau...</span></span></div>
-             </h1>
-        </div>
-                <img src="Resourses/Yo.webp" alt="Gino Xiscatti" class="portada-image">
-            </div>
-            <div class="rect-16-9 grain-dark">
-                <!-- Este es el bloque gris de 16:9 -->
-            </div>
-        </div>
-
-
-
-
-
-
-        <div id="modulo-ilustra" class="content-block">
-            <section>
-                <h2>Ilustra</h2>
-                <div class="ilustra-subnav">
-                    <button class="ilustra-tab active" data-ilustra="que-es">¿Qué es Ilustra?</button>
-                    <button class="ilustra-tab" data-ilustra="portafolio">Portafolio</button>
-                    <button class="ilustra-tab" data-ilustra="precios">Precios</button>
-                </div>
-                <div class="ilustra-panels">
-                    <div class="ilustra-panel active" data-ilustra-panel="que-es">
-                        <div class="grid">
-                            <div class="card">
-                                <h3>Proyecto Ilustra 01</h3>
-                                <p>Descripción detallada del trabajo artístico y creativo.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ilustra-panel" data-ilustra-panel="portafolio">
-                        <div class="grid">
-                            <div class="card">
-                                <h3>Portafolio</h3>
-                                <p>Galería seleccionada de trabajos y proyectos de Ilustra.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ilustra-panel" data-ilustra-panel="precios">
-                        <div class="grid">
-                            <div class="card">
-                                <h3>Precios</h3>
-                                <p>Información básica de paquetes y rangos de inversión.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-
-
-
-
-
-        
-        <div id="modulo-dental-lab" class="content-block">
-            <section>
-                <h2>Dental Lab</h2>
-                <div class="grid">
-                    <div class="card">
-                        <h3>Proyecto Dental 01</h3>
-                        <p>Especialización en prótesis y soluciones dentales de alta precisión.</p>
-                    </div>
-                </div>
-            </section>
-        </div>
-
-        <div id="modulo-hobbys" class="content-block">
-            <section>
-                <h2>Hobbys</h2>
-                <div class="grid">
-                    <div class="card">
-                        <h3>Fotografía</h3>
-                        <p>Capturando momentos a través del lente.</p>
-                    </div>
-                    <div class="card">
-                        <h3>Música</h3>
-                        <p>Explorando sonidos y ritmos.</p>
-                    </div>
-                </div>
-            </section>
-        </div>
-
-        <div id="modulo-tutoriales" class="content-block">
-            <section>
-                <h2>Tutoriales</h2>
-                <div class="grid">
-                    <div class="card">
-                        <h3>Entrada 01</h3>
-                        <p>Pensamientos sobre diseño, tecnología y arte dental.</p>
-                    </div>
-                </div>
-            </section>
-        </div>
-
-        <div id="modulo-contacto" class="content-block">
-            <section>
-                <h2>Contacto</h2>
-                <div class="grid">
-                    <!-- Sector Personal -->
-                    <div class="card card-personal">
-                        <h3>Personal</h3>
-                        <ul class="contact-list">
-                            <li><a href="mailto:xiscattigino@gmail.com" class="contact-link">Email</a></li>
-                            <li><a href="https://www.instagram.com/gino.xiscatti/" target="_blank" class="contact-link">Instagram</a></li>
-                            <li><a href="https://wa.me/595982573222" target="_blank" class="contact-link">Whatsapp</a></li>
-                        </ul>
-                    </div>
-                    
-                    <!-- Sector Illustra -->
-                    <div class="card card-illustra">
-                        <h3>Illustra</h3>
-                        <ul class="contact-list">
-                            <li><a href="https://www.instagram.com/ilustra.estudio.grafico/" target="_blank" class="contact-link">Instagram</a></li>
-                        </ul>
-                    </div>
-                    
-                    <!-- Sector Laboratorio -->
-                    <div class="card card-dental">
-                        <h3>Dental Lab</h3>
-                        <p class="coming-soon">Próximamente...</p>
-                    </div>
-                    
-                    <!-- Sector Otros -->
-                    <div class="card card-otros">
-                        <h3>Otros</h3>
-                        <ul class="contact-list">
-                            <li><a href="https://github.com/GinoXiscatti" target="_blank" class="contact-link">Github</a></li>
-                            <li><a href="https://www.reddit.com/user/GinoXiscatti/" target="_blank" class="contact-link">Reddit</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-        </div>
+        <div id="modulo-perfil" class="content-block active"></div>
+        <div id="modulo-ilustra" class="content-block"></div>
+        <div id="modulo-dental-lab" class="content-block"></div>
+        <div id="modulo-miel" class="content-block"></div>
+        <div id="modulo-contacto" class="content-block"></div>
     </main>
-
-
-
-
-
     
-    <script src="Web/script.js"></script>
+    <script src="script.js"></script>
+    <script src="ModuloInicio/modulo-inicio.js"></script>
+    <script src="ModuloMiel/modulo-miel.js"></script>
+    <script src="ModuloIlustra/modulo-ilustra.js"></script>
+    <script src="ModuloDentalLab/modulo-dental-lab.js"></script>
+    <script src="ModuloContacto/modulo-contacto.js"></script>
 </body>
 </html>

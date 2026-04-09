@@ -1,0 +1,16 @@
+/* ==========================================================================
+   MODULO MIEL
+   ========================================================================== */
+
+#modulo-miel {
+    /* Estilos específicos si son necesarios */
+}
+
+#modulo-miel .card {
+    border-color: #ffd700; /* Color miel/oro */
+}
+
+#modulo-miel .card:hover {
+    border-color: #ffcc00;
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+}
