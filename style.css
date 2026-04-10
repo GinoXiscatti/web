@@ -69,45 +69,35 @@
     --nav-height: 50px;
     --font-main: 'ClashDisplay', sans-serif;
     --font-signature: 'ClashDisplay', sans-serif;
-    --noise-grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 150 150' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    --grain-url: url("data:image/svg+xml,%3Csvg viewBox='0 0 150 150' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    --grain-opacity: 0.2;
+    --grain-blend: SCREEN;
+    --grain-size: 150px;
 }
 
-/* Estilos base para el efecto de grano */
-.myproblem, .autodidacta, .polimota, .grain-light {
+/* ==========================================================================
+   SISTEMA DE GRANO UNIFICADO (ÚNICO)
+   ========================================================================== */
+
+.grain {
     position: relative;
-    overflow: hidden;
 }
 
-/* Las perforaciones necesitan grano pero sin overflow:hidden para no alterar su tamaño flex */
-.perforation {
-    position: relative;
-}
-
-.myproblem::before, .autodidacta::before, .polimota::before, .perforation::before, .grain-light::before {
+.grain::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: var(--noise-grain);
+    background-image: var(--grain-url);
     background-repeat: repeat;
-    background-size: 150px 150px;
+    background-size: var(--grain-size) var(--grain-size);
     pointer-events: none;
     z-index: 1;
-    border-radius: inherit; /* Mantiene el grano dentro si hay border-radius */
-}
-
-/* Variante para fondos OSCUROS (como el que estaba) */
-.myproblem::before, .autodidacta::before, .polimota::before, .perforation::before {
-    opacity: 0.25;
-    mix-blend-mode: screen;
-}
-
-/* Variante para fondos CLAROS (nuevo) */
-.grain-light::before {
-    opacity: 0;
-    mix-blend-mode: multiply;
+    border-radius: inherit;
+    opacity: var(--grain-opacity);
+    mix-blend-mode: var(--grain-blend);
 }
 
 * {
@@ -155,7 +145,7 @@ body {
     width: 100%;
     height: 800px; /* Grosor gigante inicial */
     background: linear-gradient(to right, 
-        #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff
+        #ff4040, #ff9c39, #ffff3e, #5bfb5b, hsl(224, 100%, 59%), #7746ff, #b254ff
     );
     transform: translateY(100%); /* Oculta abajo */
     transition: height 0.8s cubic-bezier(0.85, 0, 0.15, 1),

@@ -438,12 +438,12 @@
 
 @keyframes filmFlow {
     from {
-        /* Empieza en la posición original para un bucle hacia arriba */
-        transform: translateY(0);
+        /* Empieza desplazado hacia arriba (una perforación + gap) */
+        transform: translateY(calc(-100% / 6 - 0.7%));
     }
     to {
-        /* Termina desplazado hacia arriba (una perforación + gap) */
-        transform: translateY(calc(-100% / 6 - 0.7%));
+        /* Termina en la posición original para un bucle hacia abajo */
+        transform: translateY(0);
     }
 }
 .perforation {
@@ -649,7 +649,7 @@
     mix-blend-mode: difference;
     font-family: 'ClashDisplay', sans-serif;
     font-weight: 300;
-    font-size: 4.5vw; /* Puro vw para escala exacta sin importar el ancho */
+    font-size: 4vw; /* Puro vw para escala exacta sin importar el ancho */
     letter-spacing: -0.02em; /* Estética de Clash Display grande */
     line-height: 1.05;
     pointer-events: none;
@@ -699,6 +699,25 @@
     align-items: center;
     text-align: center;
     position: relative;
+    overflow: hidden;
+}
+
+/* Patrón de puntos con máscara radial */
+.final::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Patrón de puntos sutil (Polka Dots) */
+    background-image: radial-gradient(#9f9f9f5d 2px, transparent 2px);
+    background-size: 30px 30px;
+    /* Máscara radial: desaparece en el centro y aparece en los bordes */
+    mask-image: radial-gradient(circle, transparent 20%, black 80%);
+    -webkit-mask-image: radial-gradient(circle, transparent 20%, black 80%);
+    pointer-events: none;
+    z-index: 0;
 }
 
 .final-text {
@@ -707,6 +726,8 @@
     font-size: 3vw;
     line-height: 1.2;
     font-weight: 300;
+    position: relative;
+    z-index: 1;
 }
 
 .final-text p {

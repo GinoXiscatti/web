@@ -1,36 +1,36 @@
 <div id="modulo-ilustra" class="content-block">
-    <section>
-        <h2>Ilustra</h2>
-        <div class="ilustra-subnav">
-            <button class="ilustra-tab active" data-ilustra="que-es">¿Qué es Ilustra?</button>
-            <button class="ilustra-tab" data-ilustra="portafolio">Portafolio</button>
-            <button class="ilustra-tab" data-ilustra="precios">Precios</button>
+    <aside class="ilustra-left">
+        <div class="ilustra-light-effect"></div>
+        <svg class="ilustra-nav-marker" viewBox="0 0 34.28 47.97">
+            <path d="M3.92,17.27L34.28,0v47.97L3.58,30.48c-4.92-3.14-4.74-10.33.34-13.21Z" fill="#ffffff"/>
+        </svg>
+        <div class="ilustra-nav-group">
+            <button class="ilustra-nav-item active" data-target="que-es">¿Que es Ilustra?</button>
+            <button class="ilustra-nav-item" data-target="portafolio">Portafolio</button>
+            <button class="ilustra-nav-item" data-target="precios">Precios</button>
         </div>
-        <div class="ilustra-panels">
-            <div class="ilustra-panel active" data-ilustra-panel="que-es">
-                <div class="grid">
-                    <div class="card">
-                        <h3>Proyecto Ilustra 01</h3>
-                        <p>Descripción detallada del trabajo artístico y creativo.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="ilustra-panel" data-ilustra-panel="portafolio">
-                <div class="grid">
-                    <div class="card">
-                        <h3>Portafolio</h3>
-                        <p>Galería seleccionada de trabajos y proyectos de Ilustra.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="ilustra-panel" data-ilustra-panel="precios">
-                <div class="grid">
-                    <div class="card">
-                        <h3>Precios</h3>
-                        <p>Información básica de paquetes y rangos de inversión.</p>
-                    </div>
-                </div>
+        <p class="ilustra-controls-text">¡Dale tu toque!</p>
+        <div class="ilustra-controls">
+            <button class="ilustra-btn-square">A</button>
+            <div class="ilustra-hue-container">
+                <input type="range" class="ilustra-hue-slider" min="0" max="360" value="187">
             </div>
         </div>
-    </section>
+    </aside>
+    <main class="ilustra-right">
+        <div class="ilustra-fixed-logo grain">
+            <img src="Assets/ilustra-logo.svg" alt="Ilustra Logo">
+        </div>
+        <div id="que-es" class="ilustra-panel active">
+            <!-- El contenido se cargará dinámicamente desde Storyline.json -->
+        </div>
+        <div id="portafolio" class="ilustra-panel">
+            <h2>Portafolio</h2>
+            <p>Explora nuestra selección de trabajos y proyectos artísticos.</p>
+        </div>
+        <div id="precios" class="ilustra-panel">
+            <h2>Precios</h2>
+            <p>Descubre los servicios de ilustración y diseño que ofrecemos.</p>
+        </div>
+    </main>
 </div>
