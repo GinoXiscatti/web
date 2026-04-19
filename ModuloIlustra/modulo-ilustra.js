@@ -58,6 +58,9 @@ function initModuloIlustra() {
                     setTimeout(() => {
                         const activeItem = document.querySelector('.ilustra-nav-item.active') || navItems[0];
                         if (activeItem) updateMarker(activeItem, true);
+                        
+                        // Re-verificar desborde de imágenes al activar el módulo
+                        document.querySelectorAll('.storyline-media').forEach(updateMediaMask);
                     }, 100);
                 }
             });
@@ -119,6 +122,13 @@ function initModuloIlustra() {
     }
 
     function animateHue() {
+        if (!moduloIlustra || !moduloIlustra.classList.contains('active')) {
+            if (hueAnimationId) {
+                cancelAnimationFrame(hueAnimationId);
+                hueAnimationId = null;
+            }
+            return;
+        }
         updateHue(currentHue + 0.1); // Incremento suave
         hueAnimationId = requestAnimationFrame(animateHue);
     }
@@ -225,6 +235,15 @@ function initModuloIlustra() {
 
                     itemDiv.appendChild(title);
                     itemDiv.appendChild(text);
+
+                    // --- CARGA PROCEDURAL DE MEDIOS ---
+                    const mediaContainer = document.createElement('div');
+                    mediaContainer.className = 'storyline-media';
+                    itemDiv.appendChild(mediaContainer);
+
+                    // Iniciamos la búsqueda de fotos/videos para este bloque
+                    addMediaProcedural(index + 1, mediaContainer);
+
                     storylinePanel.appendChild(itemDiv);
                 });
             })
@@ -233,6 +252,140 @@ function initModuloIlustra() {
                 // Fallback: Mostrar un mensaje de error en el panel
                 storylinePanel.innerHTML = `<h2>Error</h2><p>No se pudo cargar la historia. Asegúrate de estar usando un servidor local (Live Server).</p>`;
             });
+    }
+
+    // --- SISTEMA DE OPTIMIZACIÓN DE MEDIOS (IntersectionObserver) ---
+    const mediaObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.target.tagName === 'VIDEO') {
+                if (entry.isIntersecting) {
+                    // El video es visible, intentar reproducir
+                    entry.target.play().catch(() => {});
+                } else {
+                    // El video no es visible, pausar para ahorrar CPU/GPU
+                    entry.target.pause();
+                }
+            }
+        });
+    }, {
+        threshold: 0.1 // Se activa cuando al menos el 10% es visible
+    });
+
+    async function addMediaProcedural(itemIndex, container) {
+        const basePath = 'ModuloIlustra/QueEs-Pics/';
+        const extensions = ['webm', 'mp4', 'avif', 'webp', 'jpg', 'png', 'mov', 'avi'];
+        const videoExtensions = ['webm', 'mp4', 'mov', 'avi'];
+        const mimeTypes = {
+            'webm': 'video/webm',
+            'mp4': 'video/mp4',
+            'mov': 'video/quicktime',
+            'avi': 'video/x-msvideo'
+        };
+        
+        let mediaFound = false;
+        let fileNumber = 1;
+
+        while (fileNumber < 10) {
+            let foundInThisNumber = false;
+            let videoSources = [];
+            let imageSource = null;
+
+            for (const ext of extensions) {
+                const fileName = `${itemIndex}.${fileNumber}.${ext}`;
+                const url = basePath + fileName;
+
+                try {
+                    const response = await fetch(url, { method: 'HEAD' });
+                    if (response.ok) {
+                        if (videoExtensions.includes(ext)) {
+                            videoSources.push({ url, type: mimeTypes[ext] || `video/${ext}` });
+                        } else {
+                            imageSource = url;
+                        }
+                        foundInThisNumber = true;
+                        mediaFound = true;
+                        if (!videoExtensions.includes(ext)) break;
+                    }
+                } catch (e) {}
+            }
+
+            if (videoSources.length > 0) {
+                const video = document.createElement('video');
+                video.muted = true;
+                // No usamos autoplay global para dejar que el observer lo maneje
+                video.loop = true;
+                video.playsInline = true;
+                video.preload = 'metadata'; // Solo cargar metadatos inicialmente
+                video.setAttribute('muted', '');
+                
+                video.style.transform = 'translateZ(0)';
+
+                videoSources.forEach(source => {
+                    const sourceTag = document.createElement('source');
+                    sourceTag.src = source.url;
+                    sourceTag.type = source.type;
+                    video.appendChild(sourceTag);
+                });
+
+                container.appendChild(video);
+                
+                // Registrar en el observer de optimización
+                mediaObserver.observe(video);
+
+                video.onloadedmetadata = () => updateMediaMask(container);
+                video.onerror = () => {
+                    console.error(`Error en video ${itemIndex}.${fileNumber}`);
+                    video.remove();
+                    updateMediaMask(container);
+                };
+            } else if (imageSource) {
+                const img = document.createElement('img');
+                img.src = imageSource;
+                img.alt = `Medio ${itemIndex}.${fileNumber}`;
+                img.loading = 'lazy'; // Carga diferida nativa
+                container.appendChild(img);
+                img.onload = () => updateMediaMask(container);
+            }
+
+            if (!foundInThisNumber) break;
+            fileNumber++;
+        }
+
+        if (!mediaFound) container.remove();
+        else {
+            setTimeout(() => updateMediaMask(container), 200);
+            window.addEventListener('resize', () => updateMediaMask(container));
+            container.addEventListener('scroll', () => updateMediaMask(container));
+            const resizeObserver = new ResizeObserver(() => updateMediaMask(container));
+            resizeObserver.observe(container);
+            if (container.firstChild) resizeObserver.observe(container.firstChild);
+        }
+    }
+
+    function updateMediaMask(container) {
+        if (!container) return;
+        
+        const scrollLeft = container.scrollLeft;
+        const scrollWidth = container.scrollWidth;
+        const clientWidth = container.clientWidth;
+        const maxScroll = Math.max(0, scrollWidth - clientWidth);
+        
+        // Caso: No hay desborde real
+        if (maxScroll <= 1) {
+            container.style.setProperty('--l-stop', '0px');
+            container.style.setProperty('--r-stop', '0px');
+            return;
+        }
+
+        // Lógica ultra-estable para justify-content: flex-end
+        // En flex-end, 0 es la derecha y valores negativos son hacia la izquierda
+        const isAtRight = scrollLeft >= -5;
+        const isAtLeft = Math.abs(scrollLeft) >= maxScroll - 5;
+
+        // Si NO estamos en el borde, aplicamos el fade (60px)
+        // Usamos variables CSS para que la transición en CSS sea fluida
+        container.style.setProperty('--l-stop', isAtLeft ? '0px' : '60px');
+        container.style.setProperty('--r-stop', isAtRight ? '0px' : '60px');
     }
 
     // Inicializar Storyline

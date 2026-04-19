@@ -316,6 +316,59 @@
     margin-right: 10px; /* Un poco de separación de la barra */
 }
 
+/* GALERÍA DE MEDIOS (PROCEDURAL) */
+.storyline-media {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end; /* Alineado a la derecha como el texto */
+    gap: 15px;
+    margin-top: 10px;
+    margin-right: 33px; /* Espacio de seguridad para la barra */
+    width: calc(100% - 33px); 
+    overflow-x: auto;
+    padding-bottom: 5px;
+    scrollbar-width: none; /* Ocultar scrollbar en Firefox */
+    position: relative;
+
+    /* SISTEMA DE MÁSCARA PRO (STOPS VARIABLES) */
+    --fade-size: 60px;
+    --l-stop: 0px;
+    --r-stop: 0px;
+    
+    -webkit-mask-image: linear-gradient(to right, 
+        transparent 0, 
+        black var(--l-stop), 
+        black calc(100% - var(--r-stop)), 
+        transparent 100%
+    );
+    mask-image: linear-gradient(to right, 
+        transparent 0, 
+        black var(--l-stop), 
+        black calc(100% - var(--r-stop)), 
+        transparent 100%
+    );
+    transition: --l-stop 0.3s ease, --r-stop 0.3s ease;
+    
+    /* Mejoras para Safari y rendimiento */
+    isolation: isolate; 
+    -webkit-overflow-scrolling: touch;
+}
+
+.storyline-media img, 
+.storyline-media video {
+    height: 140px; 
+    width: auto;
+    object-fit: contain;
+    display: block;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.149);
+    
+    /* Forzar aceleración de hardware para evitar parpadeos o fallos de renderizado en Safari */
+    will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
 /* Estilos de texto básicos para el contenido */
 .ilustra-panel h2 {
     font-size: 1.5em;
