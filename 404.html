@@ -5,14 +5,18 @@
     <title>Gino Xiscatti</title>
     <script type="text/javascript">
       // Script para manejar SPA en GitHub Pages
-      // Toma la URL que dio 404 y la guarda para que index.html la maneje
-      var pathSegmentsToKeep = 1; // 'web' es el primer segmento en ginoxiscatti.github.io/web/
+      var pathSegmentsToKeep = 1;
 
       var l = window.location;
+      var path = l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/');
+      var p = '/' + l.pathname.split('/').slice(1 + pathSegmentsToKeep).join('/');
+      
+      // Aseguramos que no haya doble barra al principio de p
+      p = p.replace(/\/+/g, '/');
+
       l.replace(
         l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
-        l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?p=/' +
-        l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
+        path + '/?p=' + p.replace(/&/g, '~and~') +
         (l.search ? '&q=' + l.search.slice(1).replace(/&/g, '~and~') : '') +
         l.hash
       );

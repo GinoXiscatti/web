@@ -151,7 +151,8 @@ function initWebSystems() {
 
     function getModuleIdFromPath(path) {
         // Limpiamos la ruta (quitamos el nombre del repo si estamos en GitHub Pages)
-        const cleanPath = path.replace('/web', '') || '/';
+        // Usamos una regex más robusta para limpiar el prefijo /web
+        const cleanPath = path.replace(/^\/web(\/|$)/, '/') || '/';
         return routes[cleanPath] || 'modulo-perfil';
     }
 
@@ -307,7 +308,8 @@ function initWebSystems() {
         if (updateHistory) {
             const path = getPathFromModuleId(targetBlock.id);
             // Si estamos en GitHub Pages, necesitamos mantener el prefijo /web
-            const fullPath = window.location.pathname.startsWith('/web') ? `/web${path === '/' ? '' : path}` : path;
+            const isGitHub = window.location.pathname.startsWith('/web');
+            const fullPath = isGitHub ? `/web${path === '/' ? '/' : path}` : path;
             history.pushState(null, null, fullPath);
         }
 

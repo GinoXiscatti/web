@@ -6,6 +6,18 @@
     <title>Gino Xiscatti</title>
     <link rel="icon" href="Assets/FirmaOnlyG.svg" type="image/svg+xml">
     
+    <script>
+        // Configuración dinámica de la base para evitar que los assets se rompan en sub-rutas
+        (function() {
+            var path = window.location.pathname;
+            var isGitHub = path.startsWith('/web');
+            var base = isGitHub ? '/web/' : '/';
+            var baseTag = document.createElement('base');
+            baseTag.href = window.location.origin + base;
+            document.head.appendChild(baseTag);
+        })();
+    </script>
+
     <!-- Script para manejar SPA en GitHub Pages -->
     <script type="text/javascript">
         (function(l) {
@@ -16,9 +28,11 @@
                     return v.indexOf('p=/') === 0;
                 })[0];
                 if (decoded) {
-                    window.history.replaceState(null, null,
-                        l.pathname.slice(0, -1) + decoded.slice(3) + l.hash
-                    );
+                    var base = l.pathname.replace(/\/+$/, '');
+                    var p = decoded.slice(3);
+                    // Aseguramos que p empiece con /
+                    if (p[0] !== '/') p = '/' + p;
+                    window.history.replaceState(null, null, base + p + l.hash);
                 }
             }
         }(window.location));
