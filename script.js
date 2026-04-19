@@ -140,6 +140,25 @@ function initWebSystems() {
 
     const baseTitle = 'Gino Xiscatti';
 
+    // Mapeo de rutas a IDs de módulos
+    const routes = {
+        '/': 'modulo-perfil',
+        '/Ilustra': 'modulo-ilustra',
+        '/DentalLab': 'modulo-dental-lab',
+        '/Miel': 'modulo-miel',
+        '/Contacto': 'modulo-contacto'
+    };
+
+    function getModuleIdFromPath(path) {
+        // Limpiamos la ruta (quitamos el nombre del repo si estamos en GitHub Pages)
+        const cleanPath = path.replace('/web', '') || '/';
+        return routes[cleanPath] || 'modulo-perfil';
+    }
+
+    function getPathFromModuleId(id) {
+        return Object.keys(routes).find(key => routes[key] === id) || '/';
+    }
+
     function getTitleForId(id) {
         if (id === 'modulo-perfil') return baseTitle;
         if (id === 'modulo-ilustra') return baseTitle + ' → Ilustra';
@@ -149,9 +168,18 @@ function initWebSystems() {
         return baseTitle;
     }
 
-    const activeBlock = document.querySelector('.content-block.active');
-    if (activeBlock) {
-        document.title = getTitleForId(activeBlock.id);
+    // Inicialización según la URL actual
+    const initialModuleId = getModuleIdFromPath(window.location.pathname);
+    const initialBlock = document.getElementById(initialModuleId);
+    if (initialBlock) {
+        switchContent(initialBlock, false); // false para no añadir al history de nuevo
+        
+        // Actualizar estado activo en el nav
+        const path = getPathFromModuleId(initialModuleId);
+        document.querySelectorAll('nav ul li a').forEach(l => {
+            if (l.getAttribute('href') === path) l.classList.add('active');
+            else l.classList.remove('active');
+        });
     }
 
     function updateMarker(element) {
@@ -209,13 +237,14 @@ function initWebSystems() {
         link.addEventListener('click', function(e) {
             e.preventDefault(); // Siempre prevenimos navegación estándar
             
-            const targetId = this.getAttribute('href').substring(1);
+            const path = this.getAttribute('href');
+            const targetId = routes[path] || 'modulo-perfil';
             const targetBlock = document.getElementById(targetId);
             const currentBlock = document.querySelector('.content-block.active');
 
             // --- ACTUALIZACIÓN DE UI (Feedback Inmediato) ---
             // Buscamos el enlace correspondiente en el menú (para manejar clicks en logo o menú)
-            const menuLink = document.querySelector(`nav ul li a[href="#${targetId}"]`);
+            const menuLink = document.querySelector(`nav ul li a[href="${path}"]`) || document.querySelector('nav ul li a[href="/"]');
             
             if (menuLink) {
                 // Remover active de todos los links del menú
@@ -247,7 +276,25 @@ function initWebSystems() {
         });
     });
 
-    function switchContent(targetBlock) {
+    // Manejar el botón de atrás/adelante del navegador
+    window.addEventListener('popstate', () => {
+        const targetId = getModuleIdFromPath(window.location.pathname);
+        const targetBlock = document.getElementById(targetId);
+        if (targetBlock) {
+            switchContent(targetBlock, false);
+            
+            // Actualizar UI del nav
+            const path = getPathFromModuleId(targetId);
+            const menuLink = document.querySelector(`nav ul li a[href="${path}"]`);
+            if (menuLink) {
+                document.querySelectorAll('nav ul li a').forEach(l => l.classList.remove('active'));
+                menuLink.classList.add('active');
+                updateMarker(menuLink);
+            }
+        }
+    });
+
+    function switchContent(targetBlock, updateHistory = true) {
         document.querySelectorAll('.content-block').forEach(block => {
             block.classList.remove('active');
         });
@@ -255,6 +302,14 @@ function initWebSystems() {
         targetBlock.classList.add('active');
 
         document.title = getTitleForId(targetBlock.id);
+
+        // Actualizar URL sin recargar
+        if (updateHistory) {
+            const path = getPathFromModuleId(targetBlock.id);
+            // Si estamos en GitHub Pages, necesitamos mantener el prefijo /web
+            const fullPath = window.location.pathname.startsWith('/web') ? `/web${path === '/' ? '' : path}` : path;
+            history.pushState(null, null, fullPath);
+        }
 
         // Reset del scroll al cambiar de módulo
         const mainElement = document.querySelector('main');

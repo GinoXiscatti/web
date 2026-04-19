@@ -5,6 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gino Xiscatti</title>
     <link rel="icon" href="Assets/FirmaOnlyG.svg" type="image/svg+xml">
+    
+    <!-- Script para manejar SPA en GitHub Pages -->
+    <script type="text/javascript">
+        (function(l) {
+            if (l.search[1] === 'p') {
+                var decoded = l.search.slice(1).split('&').map(function(s) { 
+                    return s.replace(/~and~/g, '&') 
+                }).filter(function(v) {
+                    return v.indexOf('p=/') === 0;
+                })[0];
+                if (decoded) {
+                    window.history.replaceState(null, null,
+                        l.pathname.slice(0, -1) + decoded.slice(3) + l.hash
+                    );
+                }
+            }
+        }(window.location));
+    </script>
+
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="ModuloInicio/modulo-inicio.css">
     <link rel="stylesheet" href="ModuloMiel/modulo-miel.css">
@@ -71,7 +90,7 @@
     </div>
     
     <div class="top-bar grain">
-        <a href="#modulo-perfil" class="signature">
+        <a href="/" class="signature">
             <img src="Assets/Firma recortada.svg" alt="Gino Xiscatti" class="logo">
         </a>
         <div class="macos-loader">
@@ -83,13 +102,13 @@
         <nav>
             <div class="nav-marker"></div>
             <ul>
-                <li><a href="#modulo-perfil" class="active">Mi historia</a></li>
+                <li><a href="/" class="active">Mi historia</a></li>
                 <li class="nav-separator"></li>
-                <li><a href="#modulo-ilustra">Ilustra</a></li>
-                <li><a href="#modulo-dental-lab">Dental Lab</a></li>
-                <li><a href="#modulo-miel">Miel</a></li>
+                <li><a href="/Ilustra">Ilustra</a></li>
+                <li><a href="/DentalLab">Dental Lab</a></li>
+                <li><a href="/Miel">Miel</a></li>
                 <li class="nav-separator"></li>
-                <li><a href="#modulo-contacto">Contacto</a></li>
+                <li><a href="/Contacto">Contacto</a></li>
             </ul>
         </nav>
     </div>
