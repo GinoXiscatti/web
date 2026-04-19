@@ -340,7 +340,7 @@
           height: 80%;
           object-fit: contain;
           opacity: 0.9;
-          filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3)); /* Sombra suave estilo Apple */
+          filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.3)); /* Sombra suave estilo Apple */
       }
 
      @keyframes scroll-icons {
